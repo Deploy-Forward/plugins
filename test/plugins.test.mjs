@@ -32,7 +32,7 @@ test('marketplaces point to existing local plugins, omit version pins, use produ
 test('both harness manifests agree on release versions and product author', () => {
   assert.match(read('LICENSE'), /^MIT License\r?\n/);
   assert.match(read('LICENSE'), /Copyright \(c\) 2026 Deploy Forward/);
-  for (const [plugin, version] of [['convoy', '1.0.1'], ['worklanes', '0.5.1']]) {
+  for (const [plugin, version] of [['convoy', '1.0.2'], ['worklanes', '0.5.1']]) {
     for (const harness of ['claude', 'codex']) {
       const manifest = json(`${plugin}/.${harness}-plugin/plugin.json`);
       assert.equal(manifest.name, plugin);
@@ -44,7 +44,7 @@ test('both harness manifests agree on release versions and product author', () =
       if (harness === 'codex') {
         assert.equal(manifest.skills, './skills/');
         assert.equal(manifest.interface.developerName, 'Deploy Forward');
-        if (plugin === 'convoy') assert.ok(manifest.interface.longDescription.includes('pip install git+https://github.com/Deploy-Forward/convoy@v1.0.0'));
+        if (plugin === 'convoy') assert.ok(manifest.interface.longDescription.includes('pip install git+https://github.com/Deploy-Forward/convoy@v1.1.0'));
       }
     }
   }

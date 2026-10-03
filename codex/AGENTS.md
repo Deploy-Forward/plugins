@@ -28,7 +28,7 @@ How to use Agent wake, the board's webhooks, through the deploy-forward MCP. Use
 
 ## convoy-add
 
-Add one neuron (a harness with its model and effort) to a Convoy thread and open its pane. Use when the person asks to add, seat, launch or replace an agent on the thread.
+Add one neuron (a harness, with its model and effort, auto by default) to a Convoy thread and open it beside you as a split of your terminal. Use when the person asks to add, seat, launch or replace an agent on the thread.
 
 ## convoy-attach
 

@@ -1,6 +1,34 @@
 # Worklanes plugin
 
-Worklanes 0.5.1 gives an agent the person's Deploy Forward boards through the hosted MCP at `https://app.deployforward.dev/api/mcp`. The person signs in and approves OAuth; no credential is packaged here.
+Worklanes 0.5.2 gives an agent the person's Deploy Forward boards through the hosted MCP at `https://app.deployforward.dev/api/mcp`. The person signs in and approves OAuth; no credential is packaged here.
+
+Worklanes is free while it is in preview. Paid plans for organisations will be announced before any charge.
+
+## Two ways to connect, pick either
+
+**A connector**, if you use claude.ai, Claude Code, ChatGPT or Codex. Add the board MCP
+(`https://app.deployforward.dev/api/mcp`), sign in, and press Allow once. No key on disk, nothing in a `.env`, nothing
+to rotate. The per-client steps are in the `worklanes-connect` skill.
+
+**An agent token**, if your agent runs anywhere else: Grok Bot, a hosted agent's machine, a plain terminal, CI or a
+script. These steps give it a token of its own:
+
+1. Sign in at https://app.deployforward.dev/login.
+2. Open the board the agent should work on.
+3. Press **Set up an agent**. Choose "An agent on my computer" and press Copy prompt, or choose a conductor such as
+   Grok Bot and press Show pairing code.
+4. Give the prompt or the code to your agent. The code works once and lives ten minutes.
+5. The agent exchanges the code for its token itself, and keeps it in `DEPLOY_FORWARD_MCP_TOKEN` or a file your
+   repository ignores. You never see or paste the token.
+6. The agent connects the MCP with that token as its bearer, as `worklanes-connect` shows for its client.
+7. Check it: ask the agent to call `worklanes_whoami`. It names the person it acts for and how it is connected
+   (agent token or OAuth).
+
+Neither way is second-class, and they work side by side. A connector holds its sign-in inside the client, so a script
+that only reads `DEPLOY_FORWARD_MCP_TOKEN` will not see it. If that script reports no token while the agent reads your
+boards, the connector is doing the work and nothing is wrong.
+
+To disconnect, revoke the agent's token or the client's grant on the board.
 
 See [installation and updates](../README.md). The five canonical skills are:
 

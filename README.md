@@ -1,6 +1,6 @@
 # Deploy Forward plugins
 
-Marketplace for Convoy 1.0.0 and Worklanes 0.5.0. Private-repository access is required while Deploy-Forward/plugins is private.
+Marketplace for Convoy 1.0.0 and Worklanes 0.5.0. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
 
 ## Install and update
 
@@ -12,7 +12,7 @@ In Claude Code:
 /plugin install worklanes@deploy-forward
 ```
 
-Enable marketplace auto-update: open `/plugin`, choose Marketplaces, select `deploy-forward`, then Enable auto-update (the marketplace's `autoUpdate` setting must be on). Authentication to the private GitHub repository must already work through your Git credential helper.
+Enable marketplace auto-update: open `/plugin`, choose Marketplaces, select `deploy-forward`, then Enable auto-update (the marketplace's `autoUpdate` setting must be on).
 
 If `deploy-forward` is already registered from a local directory, switch that registration to GitHub before updating:
 

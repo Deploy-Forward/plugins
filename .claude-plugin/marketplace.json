@@ -2,7 +2,6 @@
   "name": "deploy-forward",
   "owner": {
     "name": "Deploy Forward"
-
   },
   "description": "Deploy Forward's marketplace of plugins for coding agents: Worklanes, the board in a client, and Convoy, several coding agents on one thread.",
   "plugins": [

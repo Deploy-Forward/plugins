@@ -4,11 +4,10 @@
   "description": "Work a Deploy Forward board from Codex through the hosted board MCP plus five skills to operate the board, manage boards, set up Agent wake, connect an agent, and hand a card to a machine.",
   "author": {
     "name": "Deploy Forward"
-
   },
   "homepage": "https://deployforward.dev",
-  "repository": "https://github.com/Deploy-Forward/platform",
-  "license": "UNLICENSED",
+  "repository": "https://github.com/Deploy-Forward/plugins",
+  "license": "MIT",
   "keywords": [
     "deploy-forward",
     "board",

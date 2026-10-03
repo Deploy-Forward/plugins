@@ -6,7 +6,6 @@
   "description": "Run several coding agents on one Convoy thread from any harness: start or reopen a thread, add agents, send and listen with receipts, wake, close, push and end. Each skill gives the command that works today.",
   "author": {
     "name": "Deploy Forward"
-
   },
   "repository": "https://github.com/Deploy-Forward/convoy",
   "license": "MIT",

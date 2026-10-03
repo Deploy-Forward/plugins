@@ -65,7 +65,7 @@ function filesEndingIn(abs, ext) {
 
 /** Every file the installer owns under the root, in harness order, with the checkout file it comes from. Never
  * <root>/.claude-plugin: that marketplace file may be someone else's (a machine-level marketplace of the person's
- * own, not this checkout's, for example at C:\.claude-plugin\marketplace.json) and this installer does not create,
+ * own, not this checkout's, for example at <root>/.claude-plugin/marketplace.json) and this installer does not create,
  * read, modify or back it up. */
 function targets(root) {
   const names = subfolders(join(PLUGIN_DIR, "agents", "skills"));

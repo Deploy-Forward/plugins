@@ -53,7 +53,7 @@ Launches of grok, agy, hermes and pi require `--allow-unverified-launch`; claude
 | Convoy thread | the `cvy_` circuit at `<root>`; its record is `<root>/.convoy/` (`feed.jsonl`, `inbox/`, `seats.jsonl`, `handoff/`). Never bare "thread" in a brief |
 | neuron | one agent on the thread, with a harness, a model and a worktree |
 | neuron id | `n` plus 6 hex, the `id` column of `convoy neurons --all`; CLI `send --id` and MCP `send.to` take it |
-| `sessionId` | the neuron's name on the thread, such as `review-thread`: the `neuron` column of `convoy neurons --all` and the `chair` field of `convoy whoami` (the CLI still says chair). `--seat` and `resume --neuron` take it |
+| `sessionId` | the neuron's name on the thread, such as `example-thread`: the `neuron` column of `convoy neurons --all` and the `chair` field of `convoy whoami` (the CLI still says chair). `--seat` and `resume --neuron` take it |
 | body | the running process of a neuron; a neuron with no body is quiet, not dead |
 | send | one message to one neuron: an inbox row with a 32-hex token |
 | receipt | a row the target neuron wrote itself, citing the token; the only proof a message arrived |
@@ -216,6 +216,5 @@ When the work is a card on a Deploy Forward board, the board tools follow the wo
 - Restart a waiter the harness killed for memory; say on the thread that it is down.
 - Print, paste or commit a token, a key or a pairing code.
 - Invent a session id, a `cvy_` id, a model or a usage figure. A missing file or field is unknown, JSON null.
-- Write `.ola/`, or use ola-brain or side-chat for Convoy work: they belong to another product. Convoy's record is
-  `.convoy/` only.
+- Keep Convoy's records in `.convoy/` only; do not write them to another product's storage or messaging system.
 - Start a second Grok Bot conductor, or run `grok -p` or `grok -c` against a neuron's session.

@@ -1,0 +1,15 @@
+---
+name: convoy-list
+description: Show the machine's Convoy thread picker and complete neuron rows. Use before messaging, selecting a thread or inspecting current activity.
+---
+<!-- Rendered by scripts/render-skills.mjs from convoy/skills/convoy-list/SKILL.md. Do not edit this copy. -->
+
+# List threads and neurons
+
+Run `convoy list` (or `python -m convoy list`). Show its output verbatim. Never pipe to head, truncate rows, merge columns, reformat identifiers or invent missing values. If the host cannot display the whole result, provide the complete output as an artifact and explicitly name that display limitation; do not imply a truncated view is complete.
+
+Default lists usable recent threads. `--all` includes older/hidden usable threads with reasons; `--since <14d|ISO>` changes the time window. Temp, missing and unreadable roots are shown as skipped, never automatically deleted.
+
+For programmatic selection use `convoy list --json`; preserve its numbered blocks, neuron ids, nulls and skipped reasons. Read-only MCP `list` returns the same data to authenticated callers.
+
+Quiet is not dead. Detached means sends refuse until that session attaches again. An unreadable field is unknown, never zero.

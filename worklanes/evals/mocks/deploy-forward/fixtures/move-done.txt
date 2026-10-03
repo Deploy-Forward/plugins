@@ -1,0 +1,1 @@
+403 done_is_human_only: only a person moves a card to done. Move it to waiting and comment "Ready for done:" with the evidence instead.

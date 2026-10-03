@@ -1,0 +1,32 @@
+{
+  "name": "deploy-forward",
+  "interface": {
+    "displayName": "Deploy Forward"
+  },
+  "plugins": [
+    {
+      "name": "worklanes",
+      "source": {
+        "source": "local",
+        "path": "./worklanes"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "convoy",
+      "source": {
+        "source": "local",
+        "path": "./convoy"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

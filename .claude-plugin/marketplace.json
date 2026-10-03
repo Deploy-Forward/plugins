@@ -1,0 +1,20 @@
+{
+  "name": "deploy-forward",
+  "owner": {
+    "name": "Deploy Forward"
+
+  },
+  "description": "Deploy Forward's marketplace of plugins for coding agents: Worklanes, the board in a client, and Convoy, several coding agents on one thread.",
+  "plugins": [
+    {
+      "name": "worklanes",
+      "source": "./worklanes",
+      "description": "Work a Deploy Forward board through the hosted board MCP (OAuth) plus five skills to operate the board, manage boards, set up Agent wake, connect an agent, and hand a card to a machine. Done stays a person's press."
+    },
+    {
+      "name": "convoy",
+      "source": "./convoy",
+      "description": "Run several coding agents on one Convoy thread from any harness: start or reopen a thread, add agents, send and listen with receipts, wake, close, push and end. Each skill gives the command that works today."
+    }
+  ]
+}

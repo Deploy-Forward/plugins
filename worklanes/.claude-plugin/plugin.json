@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "worklanes",
+  "displayName": "Worklanes",
+  "version": "0.5.0",
+  "description": "Work a Deploy Forward board through the hosted board MCP (OAuth) plus five skills to operate the board, manage boards, set up Agent wake, connect an agent, and hand a card to a machine. Done stays a person's press.",
+  "author": {
+    "name": "Deploy Forward"
+
+  },
+  "repository": "https://github.com/Deploy-Forward/platform",
+  "license": "UNLICENSED",
+  "keywords": [
+    "deploy-forward",
+    "board",
+    "cards",
+    "agents",
+    "mcp"
+  ]
+}

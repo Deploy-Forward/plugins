@@ -1,0 +1,42 @@
+{
+  "name": "worklanes",
+  "version": "0.5.0",
+  "description": "Work a Deploy Forward board from Codex through the hosted board MCP plus five skills to operate the board, manage boards, set up Agent wake, connect an agent, and hand a card to a machine.",
+  "author": {
+    "name": "Deploy Forward"
+
+  },
+  "homepage": "https://deployforward.dev",
+  "repository": "https://github.com/Deploy-Forward/platform",
+  "license": "UNLICENSED",
+  "keywords": [
+    "deploy-forward",
+    "board",
+    "cards",
+    "agents",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Worklanes",
+    "shortDescription": "Work a Deploy Forward board: cards, boards, Agent wake.",
+    "longDescription": "Connects Codex to the person's Deploy Forward boards through the hosted board MCP. The skills teach the loop (queue, claim, work, comment, move), how to alert the person, how a card is handed over as Ready for done, boards, Agent wake, connecting other agents, and handing a card to a machine. Moving a card to done stays the person's press. Nothing to install on your computer: the plugin connects to https://app.deployforward.dev/api/mcp. You need a Deploy Forward account with access to at least one board, and on first use you sign in and approve the connection. The plugin's README has the setup steps, a check that it works, and troubleshooting.",
+    "developerName": "Deploy Forward",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://deployforward.dev",
+    "brandColor": "#1d4ed8",
+    "logo": "./assets/logo.png",
+    "composerIcon": "./assets/composer-icon.png",
+    "defaultPrompt": [
+      "What on my Deploy Forward board needs me?",
+      "Show the cards I can take and claim one.",
+      "Open a new board for this project."
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "algorithm": "sha256-git-blobs-base64url",
+  "plugins": {
+    "convoy": {
+      "version": "1.0.1",
+      "hash": "EcI8n00oKn95eo9hVritDjymkaVBqrsB35WreE8K538"
+    },
+    "worklanes": {
+      "version": "0.5.1",
+      "hash": "2EgpkddBxB1JW5NzNhiTk7fZ495eIpJ_5GKcPeUgMPk"
+    }
+  }
+}

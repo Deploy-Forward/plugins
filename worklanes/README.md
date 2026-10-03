@@ -1,6 +1,6 @@
 # Worklanes plugin
 
-Worklanes 0.5.0 gives an agent the person's Deploy Forward boards through the hosted MCP at `https://app.deployforward.dev/api/mcp`. The person signs in and approves OAuth; no credential is packaged here.
+Worklanes 0.5.1 gives an agent the person's Deploy Forward boards through the hosted MCP at `https://app.deployforward.dev/api/mcp`. The person signs in and approves OAuth; no credential is packaged here.
 
 See [installation and updates](../README.md). The five canonical skills are:
 

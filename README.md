@@ -1,6 +1,6 @@
 # Deploy Forward plugins
 
-Marketplace for Convoy 1.0.0 and Worklanes 0.5.0. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
+Marketplace for Convoy 1.0.1 and Worklanes 0.5.1. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
 
 ## Install and update
 
@@ -40,6 +40,8 @@ For a local checkout, register the checkout root. Codex's marketplace manifest i
 Worklanes connects to the hosted board MCP using the person's OAuth approval. Convoy requires Python 3.11+, the matching Convoy release, and its loopback MCP at `http://127.0.0.1:8788/mcp`. MCP writes remain bearer-gated. This repository contains no credentials.
 
 ## One source per skill
+
+Every content change ships with a version bump; that is what triggers updates. Bump both harness manifests for the affected plugin, regenerate its renders, then run `node scripts/plugin-versions.mjs --write` to refresh `versions.lock`. The check compares content/version pairs with the lock and Git HEAD/parents, so refreshing a hash alone cannot hide a missing bump. Run the tests from a Git checkout with its history available; archive-only copies cannot prove the update baseline.
 
 Edit only `convoy/skills/<name>/SKILL.md` or `worklanes/skills/<name>/SKILL.md`. Then run:
 

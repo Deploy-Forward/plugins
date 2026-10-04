@@ -15,7 +15,7 @@ never from your memory of an earlier turn.
 every path with forward slashes, in commands and in briefs: a backslash path loses its backslashes on the way through
 a shell, and a waiter on the mangled path never fires.
 
-The verb skills (`convoy-start`, `convoy-add`, `convoy-list`, `convoy-attach`, `convoy-detach`, `neuron-receive`,
+The verb skills (`convoy-start`, `convoy-add`, `convoy-list`, `convoy-whoami`, `convoy-lead`, `convoy-attach`, `convoy-detach`, `neuron-receive`,
 `convoy-send`, `convoy-listen`, `convoy-nudge`, `convoy-close`, `convoy-push`, `convoy-end`) give the commands that work today and label planned spellings that are not implemented.
 
 ## First-run write policy

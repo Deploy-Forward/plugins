@@ -32,7 +32,7 @@ test('marketplaces point to existing local plugins, omit version pins, use produ
 test('both harness manifests agree on release versions and product author', () => {
   assert.match(read('LICENSE'), /^MIT License\r?\n/);
   assert.match(read('LICENSE'), /Copyright \(c\) 2026 Deploy Forward/);
-  for (const [plugin, version] of [['convoy', '1.0.2'], ['worklanes', '0.5.2']]) {
+  for (const [plugin, version] of [['convoy', '1.0.3'], ['worklanes', '0.5.2']]) {
     for (const harness of ['claude', 'codex']) {
       const manifest = json(`${plugin}/.${harness}-plugin/plugin.json`);
       assert.equal(manifest.name, plugin);
@@ -53,7 +53,7 @@ test('both harness manifests agree on release versions and product author', () =
 test('all harness renders exactly match their canonical sources', () => {
   const result = run(['scripts/render-skills.mjs', '--check']);
   assert.equal(result.status, 0, result.stdout + result.stderr);
-  assert.match(result.stdout, /18 canonical skills; 55 rendered files; 0 failures/);
+  assert.match(result.stdout, /20 canonical skills; 61 rendered files; 0 failures/);
 });
 
 test('MCP sources retain loopback Convoy and hosted Worklanes boundaries', () => {
@@ -76,7 +76,7 @@ test('installer dry run is read-only; apply is idempotent and preserves target m
   assert.equal(result.status, 0, result.stderr);
   assert.equal(readFileSync(marketplace, 'utf8'), 'owner-controlled sentinel\n');
   for (const harness of ['.claude', '.codex', '.agents', '.grok']) {
-    for (const name of ['convoy-attach', 'convoy-detach', 'neuron-receive']) {
+    for (const name of ['convoy-attach', 'convoy-detach', 'neuron-receive', 'convoy-whoami', 'convoy-lead']) {
       assert.equal(readFileSync(join(sandbox, harness, 'skills', name, 'SKILL.md'), 'utf8'), read(`agents/skills/${name}/SKILL.md`));
     }
   }

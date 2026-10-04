@@ -46,6 +46,10 @@ Detach this session from its Convoy thread while preserving its handoff, seat an
 
 End a Convoy task and save every neuron's state to the thread. Use when the person asks to end, wrap up or hand off a Convoy session, for one neuron or for the whole thread. It never pushes unless the person asked.
 
+## convoy-lead
+
+Show who leads a Convoy thread, and pass the lead to another chair. Use when someone asks who leads the thread, when a neuron needs the lead's address to report to it, or when the lead should change hands.
+
 ## convoy-list
 
 Show the machine's Convoy thread picker and complete neuron rows. Use before messaging, selecting a thread or inspecting current activity.
@@ -73,6 +77,10 @@ Send one neuron a message on a Convoy thread and prove it arrived. Use to brief,
 ## convoy-start
 
 Bind or reopen a Convoy repository and read its start card. Use when the person names a project, repository, URL or local folder to start; this command opens no agent panes.
+
+## convoy-whoami
+
+Show which Convoy chair this running session is on a thread, how that was proven, and what to do when it is none. Use at the start of work on a thread, before you send or claim to be anyone, and whenever someone asks "who are you" or "what is your neuron id".
 
 ## neuron-receive
 

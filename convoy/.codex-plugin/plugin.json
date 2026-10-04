@@ -1,6 +1,6 @@
 {
   "name": "convoy",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Run several coding agents on one Convoy thread from any harness: start or reopen a thread, add agents, send and listen with receipts, wake, close, push and end. Each skill gives the command that works today.",
   "author": {
     "name": "Deploy Forward"
@@ -36,5 +36,6 @@
       "Send this agent a brief and wait for its receipt.",
       "End this Convoy task and save every agent's state."
     ]
-  }
+  },
+  "hooks": "./codex-hooks.json"
 }

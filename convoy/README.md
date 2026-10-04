@@ -1,6 +1,6 @@
 # Convoy plugin
 
-Convoy 1.0.4 is the local-first technical agent interface. A thread is a durable `cvy_` circuit; a neuron is a harness and model with its own permanent identity. Worklanes provides the companion board interface.
+Convoy 1.0.5 is the local-first technical agent interface. A thread is a durable `cvy_` circuit; a neuron is a harness and model with its own permanent identity. Worklanes provides the companion board interface.
 
 See [installation and updates](../README.md). The plugin requires the Convoy CLI and its loopback MCP on `127.0.0.1:8788`; writes require the conductor bearer. It does not start the server or launch agent panes just by installing.
 
@@ -17,6 +17,16 @@ convoy mcp --host 127.0.0.1 --port 8788
 Keep that server running separately. `--root <thread-root>` optionally binds it to one existing thread; an unbound server requires the client to name the thread on thread-specific calls. Register/install the plugin using the repository README, then open `/mcp` in Claude Code and check the Convoy connection. Ask the connected client to list its Convoy tools, call `roster` and read its `contract` field; a successful read confirms the protocol, not permission to write or launch.
 
 On Windows, check the listener with `Test-NetConnection 127.0.0.1 -Port 8788` in PowerShell. An open port alone does not prove it is the correct MCP server. Keep it loopback-only. Obtain the conductor bearer through Convoy's existing grant path before writes; never paste credentials into a skill, repository or report.
+
+## Codex: trust Convoy's hooks once
+
+In Codex, this plugin carries two hooks: a Stop hook (`convoy end --hook`, the turn-end heartbeat that also records the
+session's id) and a PostToolUse hook (`convoy inbox --hook-pretooluse`, which delivers messages addressed to the
+session). Codex runs no plugin hook until you review it. The first time Codex starts after installing or updating the
+plugin, choose **Review hooks** in "Hooks need review", or run `/hooks`, and trust the two `convoy@deploy-forward` hooks.
+Trust is kept per plugin, so it covers every project and worktree until a hook's definition changes. Outside a Convoy
+thread both hooks do nothing and exit at once. Without that trust, a Codex neuron cannot be woken by a send and its
+identity rests only on its folder.
 
 ## Troubleshooting
 

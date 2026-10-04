@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "convoy end --hook",
+            "timeout": 5,
+            "statusMessage": "Recording Convoy heartbeat"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "convoy inbox --hook-pretooluse",
+            "timeout": 8
+          }
+        ]
+      }
+    ]
+  }
+}

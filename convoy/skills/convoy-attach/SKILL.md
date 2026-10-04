@@ -1,6 +1,7 @@
 ---
 name: convoy-attach
 description: Link this already-running native session to a Convoy thread without opening or resuming another agent.
+argument-hint: "[cvy_ id or thread name]"
 ---
 
 # Attach this session

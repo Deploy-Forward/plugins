@@ -1,6 +1,7 @@
 ---
 name: worklanes-operate
 description: How to work a Deploy Forward board through the deploy-forward MCP tools. Use whenever the person mentions the board, a card, a column, a claim, or asks what needs attention, and before any worklanes_* call.
+argument-hint: "[board]"
 ---
 
 # Working a Deploy Forward board

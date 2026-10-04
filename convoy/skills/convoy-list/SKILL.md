@@ -1,6 +1,7 @@
 ---
 name: convoy-list
 description: Show the machine's Convoy thread picker and complete neuron rows. Use before messaging, selecting a thread or inspecting current activity.
+argument-hint: "[--all] [--since 14d]"
 ---
 
 # List threads and neurons

@@ -1,6 +1,7 @@
 ---
 name: convoy-end
 description: End a Convoy task and save every neuron's state to the thread. Use when the person asks to end, wrap up or hand off a Convoy session, for one neuron or for the whole thread. It never pushes unless the person asked.
+argument-hint: "[--push]"
 ---
 
 # End a Convoy task

@@ -1,6 +1,7 @@
 ---
 name: worklanes-connect
 description: How to give an agent a Deploy Forward board - the board MCP URL, OAuth consent, the per-client connectors (Claude, ChatGPT, Codex, Grok), and the board's Set up an agent and Grok Bot paths. Use when the person asks to connect an agent or a client, when a connection is refused or covers the wrong organisation, or before walking anyone through setup.
+argument-hint: "[claude | chatgpt | codex | grok]"
 ---
 
 # Giving an agent the board

@@ -1,6 +1,7 @@
 ---
 name: convoy-lead
 description: Show who leads a Convoy thread, and pass the lead to another chair. Use when someone asks who leads the thread, when a neuron needs the lead's address to report to it, or when the lead should change hands.
+argument-hint: "[--to chair] [--as your chair]"
 ---
 
 # The thread's lead

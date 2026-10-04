@@ -1,6 +1,7 @@
 ---
 name: convoy-whoami
 description: Show which Convoy chair this running session is on a thread, how that was proven, and what to do when it is none. Use at the start of work on a thread, before you send or claim to be anyone, and whenever someone asks "who are you" or "what is your neuron id".
+argument-hint: "[--root path]"
 ---
 
 # Who am I on this thread

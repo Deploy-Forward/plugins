@@ -1,6 +1,7 @@
 ---
 name: convoy-nudge
 description: Wake one idle neuron's pane on this machine with the person's consent. Use only after a send is queued and the neuron is not taking turns. A nudge carries no message and never proves delivery.
+argument-hint: "[neuron id]"
 ---
 
 # Nudge a neuron

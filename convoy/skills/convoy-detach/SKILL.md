@@ -1,6 +1,7 @@
 ---
 name: convoy-detach
 description: Detach this session from its Convoy thread while preserving its handoff, seat and history. Does not close a pane or stop the harness.
+argument-hint: "[--thread cvy_ id]"
 ---
 
 # Detach this session

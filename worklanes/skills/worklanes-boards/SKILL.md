@@ -1,6 +1,7 @@
 ---
 name: worklanes-boards
 description: How to open, edit, share, archive and restore Deploy Forward boards for the person you act for. Use when the person asks for a new board, to rename or share one, to archive or restore one, or before any worklanes_board_create, worklanes_board_edit, worklanes_board_archive or worklanes_board_restore call.
+argument-hint: "[new | share | archive | restore]"
 ---
 
 # Boards

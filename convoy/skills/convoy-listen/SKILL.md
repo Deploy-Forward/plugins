@@ -1,6 +1,7 @@
 ---
 name: convoy-listen
 description: Receive on a Convoy thread by waiting for rows addressed to you, draining your inbox and acknowledging each row. Use at the start of every turn, at the end of every turn, and whenever you have been idle.
+argument-hint: "[--timeout seconds]"
 ---
 
 # Listen on a Convoy thread

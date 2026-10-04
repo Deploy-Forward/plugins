@@ -1,6 +1,7 @@
 ---
 name: neuron-receive
 description: Prove this running session's Convoy identity and receive its messages. Use at the start of a turn, after idle time, or when an inbox notification arrives; never consumes another neuron's inbox.
+argument-hint: "[cvy_ id]"
 ---
 
 # Receive as this neuron

@@ -1,6 +1,7 @@
 ---
 name: convoy-close
 description: Save a neuron's state, then close its pane with the person's consent. Use when the person asks to close, stop or retire a neuron. It never closes without a named target.
+argument-hint: "[neuron id]"
 ---
 
 # Close a neuron

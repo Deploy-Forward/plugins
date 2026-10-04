@@ -3,12 +3,12 @@
   "algorithm": "sha256-git-blobs-base64url",
   "plugins": {
     "convoy": {
-      "version": "1.0.3",
-      "hash": "9UtDXRCnKvg-A3nIAoHyEkBw-HMfMVFRwd3ljr0ngQg"
+      "version": "1.0.4",
+      "hash": "YrllIIHjUULxQPKiUy6WsxIMgTuxHijsCXdzVeenZrw"
     },
     "worklanes": {
-      "version": "0.5.2",
-      "hash": "IYvCTmnZ3HSnmJp9yukb5e0H1b4965MtFeUDBHGd34I"
+      "version": "0.5.3",
+      "hash": "FGSfwSBbj6LSx6HfJsj_fFMApH4-cnfbhbN65oIqqMY"
     }
   }
 }

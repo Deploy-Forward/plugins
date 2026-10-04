@@ -1,6 +1,7 @@
 ---
 name: convoy-push
 description: Push a neuron's own work to version control. Use when a neuron checkpoints its branch after a fix, or when the person asks to push one neuron's branch or every neuron's branch. It never force-pushes.
+argument-hint: "[neuron id]"
 ---
 
 # Push a neuron's work

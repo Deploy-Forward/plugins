@@ -1,6 +1,7 @@
 ---
 name: convoy-send
 description: Send one neuron a message on a Convoy thread and prove it arrived. Use to brief, order or answer a neuron. A queued send is not a receipt; only the neuron's own row citing the token is.
+argument-hint: "[neuron id] [message]"
 ---
 
 # Send a neuron a message

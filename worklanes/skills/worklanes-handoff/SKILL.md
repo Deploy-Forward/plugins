@@ -1,6 +1,7 @@
 ---
 name: worklanes-handoff
 description: How a card reaches a neuron on a machine through the board - handing a card to a machine, reading its agent sessions, waking a neuron, and reporting on a brief. Use when the person wants a card built on a machine, asks what the neuron on a card is doing, or before any worklanes_provision, worklanes_threads, worklanes_nudge or worklanes_delegation_report call.
+argument-hint: "[card]"
 ---
 
 # Handing a card to a machine

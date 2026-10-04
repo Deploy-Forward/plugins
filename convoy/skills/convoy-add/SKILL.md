@@ -1,6 +1,7 @@
 ---
 name: convoy-add
 description: Add one neuron (a harness, with its model and effort, auto by default) to a Convoy thread and open it beside you as a split of your terminal. Use when the person asks to add, seat, launch or replace an agent on the thread.
+argument-hint: "[harness] [model|auto] [--title name]"
 ---
 
 # Add a neuron

@@ -1,6 +1,7 @@
 ---
 name: worklanes-wake
 description: How to use Agent wake, the board's webhooks, through the deploy-forward MCP. Use when the person wants an agent woken by board or card events, asks why a wake is quiet or paused, or before any worklanes_webhooks, worklanes_webhook_delete or worklanes_deliveries call.
+argument-hint: "[board]"
 ---
 
 # Agent wake (webhooks)

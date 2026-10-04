@@ -1,6 +1,7 @@
 ---
 name: convoy-start
 description: Bind or reopen a Convoy repository and read its start card. Use when the person names a project, repository, URL or local folder to start; this command opens no agent panes.
+argument-hint: "[path | url | owner/repo | name]"
 ---
 
 # Start a Convoy thread

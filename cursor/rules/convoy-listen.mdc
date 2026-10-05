@@ -23,15 +23,16 @@ capped, because the inbox drains only on hooks; with no `--neuron` it listens fo
 convoy --root <root> feed --since <ts>
 convoy --root <root> inbox --seat <sessionId>
 convoy --root <root> inbox --drain --seat <sessionId>
-convoy --root <root> hook note "<what you did or will do> token=<token>" --as-me --to <sender>
+convoy --root <root> reply <token> "<what you did or will do>"
 convoy --root <root> inbox --wait --seat <sessionId> --timeout 3600
 ```
 
 1. `feed --since <ts>` (such as `10m`, `2h`, or the ISO time of your last acknowledgement) shows every row since
    then. Act on the notes addressed to you (`to` is your `sessionId`) and on receipts citing tokens you sent.
 2. `inbox --seat` peeks at your pending rows; `inbox --drain --seat` takes them and marks each consumed.
-3. Acknowledge every drained row with a note that cites its token. That row is the receipt; the sender's card can
-   never claim it. `<sender>` is the `sessionId` the brief told you to answer.
+3. Acknowledge every drained row with `convoy reply <token>`: Convoy addresses it to the send's sender and cites the
+   token. That row is the receipt; the sender's card can never claim it. When the send has no proven sender, reply
+   refuses; report with `convoy report "..."` instead.
 4. On roots where wake is not enabled, end the turn with the inbox waiter running as a BACKGROUND command. It returns as soon as a row is pending, which wakes
    you, and it never drains. `--timeout` caps the wait in seconds; with nothing pending it ends with `timed_out: true`.
    Only a waiter your session started itself wakes you. The waiter Convoy's Stop hook starts keeps your pulse honest
@@ -46,9 +47,9 @@ Check `convoy --root <root> wake status` before choosing a waiter. The wake-enab
 
 Run the command the Stop hook prints, not the python line quoted below.
 
-"On a thread where `convoy wake status` shows enabled, you wake only through a waiter you run yourself. Before you end a turn, run as a background command (run_in_background): `python -m convoy.wait --root <root> --seat <your chair>`. Do not run it in the foreground; it waits up to four hours. When it exits it prints the wake: a pointer with a token, never the message. Drain your inbox (`convoy inbox --drain --seat <chair>`), act, answer with `convoy hook note "re token <token>: ..." --as-me --to <sender>`, then arm the waiter again before you stop. If the Stop hook tells you to arm a waiter, do exactly that and end the turn; it asks once. A waiter the Stop hook starts by itself cannot wake you; only yours can."
+"On a thread where `convoy wake status` shows enabled, you wake only through a waiter you run yourself. Before you end a turn, run as a background command (run_in_background): `python -m convoy.wait --root <root> --seat <your chair>`. Do not run it in the foreground; it waits up to four hours. When it exits it prints the wake: a pointer with a token, never the message. Drain your inbox (`convoy inbox --drain --seat <chair>`), act, answer with `convoy reply <token> "..."`, then arm the waiter again before you stop. If the Stop hook tells you to arm a waiter, do exactly that and end the turn; it asks once. A waiter the Stop hook starts by itself cannot wake you; only yours can."
 
-The current amendment supersedes the bare `python` command and "asks once" wording in that quotation: use the command the Stop hook prints (`wait.wait_command`), which names the running interpreter. If none is printed, ask the person. The Stop hook asks at most 3 turns in a row. Do not run the legacy inbox waiter alongside this dispatcher-managed waiter. Check for an existing session-owned waiter before arming another.
+Two corrections to that quotation: use the command the Stop hook prints (`wait.wait_command`), which names the running interpreter, not the bare `python` command; and the Stop hook may ask more than once. If none is printed, ask the person. The Stop hook asks at most 3 turns in a row. Do not run the legacy inbox waiter alongside this dispatcher-managed waiter. Check for an existing session-owned waiter before arming another.
 
 Drain only after proving the current, attached chair with whoami. Detached chairs retain their pending count but must not drain, pulse or re-arm. An unknown/claimed author cannot clear pending work. A pointer notification is not a message body or delivery proof.
 

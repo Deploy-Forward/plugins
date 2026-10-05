@@ -28,7 +28,7 @@ How to use Agent wake, the board's webhooks, through the deploy-forward MCP. Use
 
 ## convoy-add
 
-Add one neuron (a harness, with its model and effort, auto by default) to a Convoy thread and open it beside you as a split of your terminal. Use when the person asks to add, seat, launch or replace an agent on the thread.
+Add one neuron (a harness, with its model and effort, auto by default) to a Convoy thread and open it in the thread's own terminal window (Windows) or beside you in tmux. Use when the person asks to add, seat, launch or replace an agent on the thread.
 
 ## convoy-attach
 
@@ -41,6 +41,10 @@ Save a neuron's state, then close its pane with the person's consent. Use when t
 ## convoy-detach
 
 Detach this session from its Convoy thread while preserving its handoff, seat and history. Does not close a pane or stop the harness.
+
+## convoy-dictionary
+
+The canonical Convoy and Worklanes dictionary - what each word means, which command to use for each intent, and what works on this machine (a local Windows device, a Linux or macOS VM, or between machines). Use when a Convoy word is unclear, before choosing a command, and when setting Convoy up on a new machine.
 
 ## convoy-end
 

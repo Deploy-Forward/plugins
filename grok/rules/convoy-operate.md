@@ -88,20 +88,20 @@ receive loop in `convoy-listen`.
 - **A queued send is not a receipt.** The card's `delivery` (`queued`, `native-queued`, `recorded`, `executed`,
   `refused`, `error`) says what happened to the message, and `delivered` is always `false` on it. The message arrived
   only when the target's own row cites the token.
-- **Acknowledge with a note, as yourself.** Drain your inbox (`convoy-listen`), then write the receipt citing the
-  token. A send carries no sender, so a brief names who to answer; when it does not, answer the conductor that seated
-  you. `<sender>` is that neuron's `sessionId`.
+- **Acknowledge with `convoy reply`, as yourself.** Drain your inbox (`convoy-listen`), then reply citing the token:
+  Convoy addresses the receipt to the send's sender. When the send has no proven sender, reply refuses; report your
+  result with `convoy report "..."`, which goes to your launcher, else the lead.
 
 ```
-convoy --root <root> hook note "<what you did or will do> token=<token>" --as-me --to <sender>
+convoy --root <root> reply <token> "<what you did or will do>"
 ```
 
 - **Answer the conductor the same way.** Grok Bot (`grok-bot`) reaches you only through a send (a row in your inbox
-  with a token) and `stamp` rows. Answer with a note citing that token; your note is the receipt, nothing else is. Its
+  with a token) and `stamp` rows. Answer with `convoy reply <token>`; that row is the receipt, nothing else is. Its
   contract is `<root>/.convoy/conductor.md`.
 
 ```
-convoy --root <root> hook note "<text> token=<token>" --as-me --to grok-bot
+convoy --root <root> reply <token> "<text>"
 ```
 
   Grok Bot reads the thread only through the Convoy MCP bound to one root. A note on a root the MCP is not bound to

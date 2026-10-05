@@ -1,5 +1,5 @@
 ---
-description: Add one neuron (a harness, with its model and effort, auto by default) to a Convoy thread and open it beside you as a split of your terminal. Use when the person asks to add, seat, launch or replace an agent on the thread.
+description: Add one neuron (a harness, with its model and effort, auto by default) to a Convoy thread and open it in the thread's own terminal window (Windows) or beside you in tmux. Use when the person asks to add, seat, launch or replace an agent on the thread.
 alwaysApply: false
 ---
 <!-- Rendered by scripts/render-skills.mjs from convoy/skills/convoy-add/SKILL.md. Do not edit this copy. -->
@@ -7,7 +7,9 @@ alwaysApply: false
 # Add a neuron
 
 `convoy add <harness> [<model>|auto]` adds one neuron to the thread. It cuts the neuron's worktree, joins its chair
-with a boot prompt and token, and launches it as a split of the terminal you are working in. The card's `placement`
+with a boot prompt and token, and launches it in the thread's own terminal window: on Windows a Windows Terminal window named for the thread
+(`convoy-<8 hex>`), where the first neuron opens it and later ones split inside it; inside tmux, a split of your exact
+pane. On Windows it never lands in the window you are working in. The card's `placement`
 says where it went.
 
 Still planned, not implemented: `convoy add` writes the new neuron's board token into its `.convoy/board_token`. It
@@ -44,10 +46,10 @@ convoy neurons --all
 
 The card's `placement` is one of:
 
-- `split`: inside Windows Terminal or tmux, a split of your active pane.
-- `new-window`: on Windows outside Windows Terminal, a new Windows Terminal window.
-- `detached`: on Linux or macOS outside tmux with tmux installed, a detached tmux session. Give the person the card's
-  `attach` command exactly as printed (`tmux attach -t =convoy-<thread>-<title>-<hash>`). If tmux refused the session,
+- `thread-window`: on Windows, the thread's own Windows Terminal window; the card's `window` names it.
+- `split`: inside tmux, a split of your exact pane.
+- `detached`: on Linux or macOS outside tmux with tmux installed, the thread's one detached tmux session. Give the person the
+  card's `attach` command exactly as printed (`tmux attach -t =convoy-<8 hex>`). If tmux refused the session,
   the card says `launched: false` with tmux's own words.
 - `none`: nowhere to launch (no terminal to split and no tmux). Nothing was written. Relay `placement_reason`.
 

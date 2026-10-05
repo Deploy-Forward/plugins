@@ -24,7 +24,7 @@ Rows marked **1.2.0** exist from Convoy 1.2.0. On an older CLI they are absent; 
 | model `auto` | No model or effort flag is passed; the harness starts on its own default. The default for `convoy add`. | the add card |
 | lead | The one chair that leads the thread. Its state is `none`, `dangling` (its chair is gone) or `held`. | `convoy lead` |
 | conductor | Two uses. On the lead and attach cards, `conductor` is the lead's chair (or null): an ordinary neuron that answers with `convoy reply`. A hosted MCP conductor (an agent writing over the MCP with a bearer) asks for work through sends and never authors a `note`. | `convoy lead`; `.convoy/conductor.md` |
-| launcher (**1.2.0**) | The chair that launched a neuron, recorded as `launched_by`. Null with a reason when it could not be proven. | `convoy whoami` |
+| launcher (**1.2.0**) | Who launched a neuron, recorded as `launched_by`: a chair seated on the thread, or `{kind: conductor, name}` for a launch through the MCP tools. From **1.3.0** a launch that cannot prove its launcher refuses instead of recording null; a neuron that has none gets one with `convoy adopt`. | `convoy whoami` |
 | send | One message to one chair. It returns a `token`. A send is never proof of delivery. | the send card |
 | token | The id of one send. A receipt cites it. | the send card |
 | note | A feed row written by a chair about its own work. | `convoy feed` |
@@ -33,7 +33,7 @@ Rows marked **1.2.0** exist from Convoy 1.2.0. On an older CLI they are absent; 
 | feed | The thread's append-only record. Everything a chair says or does lands here. | `convoy feed --since` |
 | heartbeat | The row a chair's turn-end hook writes. It shows the chair is alive; it is not a reply. | `convoy feed` |
 | wake | What starts an idle neuron's turn when a send arrives. It depends on the harness (see below). | the send card's `wake` |
-| attach / detach | Seat the session that is already running on a thread, or take it off. Attach never launches anything. | `convoy attach`, `detach` |
+| attach / detach | Seat the session that is already running on a thread, or take it off. Attach never launches anything. From **1.3.0** one session can sit on several threads; pass `--root`. | `convoy attach`, `detach` |
 | whoami | Which chair THIS session is, and how that was proven (`environment`, `token` and `pane-host` are strong; `cwd` alone is weak). | `convoy whoami` |
 | worktree | The git worktree Convoy cut for a neuron. A neuron works only in its own. | the add card |
 | board, card | Worklanes: the hosted board, and one piece of work on it. Never "ticket" or "task". | the Worklanes tools |
@@ -52,7 +52,8 @@ Rows marked **1.2.0** exist from Convoy 1.2.0. On an older CLI they are absent; 
 | answer a message you received (**1.2.0**) | `convoy --root <root> reply <token> "..."` | (this page) |
 | read your messages | `convoy --root <root> inbox --drain --seat <chair>`, then `reply` to each | neuron-receive, convoy-listen |
 | end your turn and hand off | `convoy --root <root> end` | convoy-end |
-| leave a thread without closing your process | `convoy detach` | convoy-detach |
+| leave a thread without closing your process | `convoy detach` (`--thread` when you are on several) | convoy-detach |
+| become the launcher of a neuron that has none (**1.3.0**) | `convoy adopt --id <neuron id>` | (this page) |
 
 `report` routes for you: to your launcher, else to the lead, and it refuses with a reason when there is neither. Use it
 instead of looking up an id. `reply` addresses the original sender and cites the token, so it is the receipt. On a CLI
@@ -78,7 +79,7 @@ working in, whichever pane has focus. The card's `window` names it.
 **A Linux or macOS machine or VM (Debian 13 included, or any headless box).**
 
 - Install into a virtual environment, because Debian refuses `pip install --user` (PEP 668):
-  `python3 -m venv ~/.convoy-venv && . ~/.convoy-venv/bin/activate && python -m pip install "git+https://github.com/Deploy-Forward/convoy@v1.2.0"`.
+  `python3 -m venv ~/.convoy-venv && . ~/.convoy-venv/bin/activate && python -m pip install "git+https://github.com/Deploy-Forward/convoy@v1.3.0"`.
 - Install the skills with the repository's `node install.mjs --apply` (Grok, Cursor and other agents), or with the
   plugin marketplace (Claude Code, Codex).
 - Inside tmux, `convoy add` splits your exact pane. Outside tmux, with tmux installed, each thread gets one detached

@@ -1,6 +1,6 @@
 {
   "name": "convoy",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Run several coding agents on one Convoy thread from any harness: start or reopen a thread, add agents, send and listen with receipts, wake, close, push and end. Each skill gives the command that works today.",
   "author": {
     "name": "Deploy Forward"
@@ -20,7 +20,7 @@
   "interface": {
     "displayName": "Convoy",
     "shortDescription": "Run your coding agents on one Convoy thread, with receipts.",
-    "longDescription": "Convoy puts Codex, Claude Code, Grok and other coding agents on one durable thread in one repository. These skills start or reopen a thread, add agents, send messages and wait for receipts, wake an idle pane with your consent, close panes, push each agent's branch and end the session. A message counts as delivered only when the receiving agent's own row cites its token. Convoy runs on your computer, not in the cloud: its skills run the Convoy command line in your terminal. It needs Python 3.11 or later, Convoy installed with python -m pip install git+https://github.com/Deploy-Forward/convoy@v1.2.0, and the Convoy MCP running locally (convoy mcp, on port 8788), which this plugin connects to at http://127.0.0.1:8788/mcp. Each agent you add must be installed and signed in on the same computer: claude, codex, grok, cursor-agent, agy, hermes or pi. Agent panes open in Windows Terminal on Windows, or in tmux on macOS and Linux. The plugin's README has the setup steps, a check that it works, and troubleshooting.",
+    "longDescription": "Convoy puts Codex, Claude Code, Grok and other coding agents on one durable thread in one repository. These skills start or reopen a thread, add agents, send messages and wait for receipts, wake an idle pane with your consent, close panes, push each agent's branch and end the session. A message counts as delivered only when the receiving agent's own row cites its token. Convoy runs on your computer, not in the cloud: its skills run the Convoy command line in your terminal. It needs Python 3.11 or later, Convoy installed with python -m pip install git+https://github.com/Deploy-Forward/convoy@v1.3.0, and the Convoy MCP running locally (convoy mcp, on port 8788), which this plugin connects to at http://127.0.0.1:8788/mcp. Each agent you add must be installed and signed in on the same computer: claude, codex, grok, cursor-agent, agy, hermes or pi. Agent panes open in Windows Terminal on Windows, or in tmux on macOS and Linux. The plugin's README has the setup steps, a check that it works, and troubleshooting.",
     "developerName": "Deploy Forward",
     "category": "Developer Tools",
     "capabilities": [

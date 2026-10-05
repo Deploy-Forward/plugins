@@ -1,6 +1,6 @@
 # Convoy plugin
 
-Convoy (plugin 1.0.6, for the Convoy CLI 1.2.0) is the local-first technical agent interface. A thread is a durable `cvy_` circuit; a neuron is a harness and model with its own permanent identity. Worklanes provides the companion board interface.
+Convoy (plugin 1.0.7, for the Convoy CLI 1.3.0) is the local-first technical agent interface. A thread is a durable `cvy_` circuit; a neuron is a harness and model with its own permanent identity. Worklanes provides the companion board interface.
 
 See [installation and updates](../README.md). The plugin requires the Convoy CLI and its loopback MCP on `127.0.0.1:8788`; writes require the conductor bearer. It does not start the server or launch agent panes just by installing.
 
@@ -9,7 +9,7 @@ See [installation and updates](../README.md). The plugin requires the Convoy CLI
 Install Python 3.11+ and the matching CLI in your chosen environment. On Debian 12/13 and other systems that refuse `pip install --user` (PEP 668), first create one: `python3 -m venv ~/.convoy-venv && . ~/.convoy-venv/bin/activate`.
 
 ```sh
-python -m pip install "git+https://github.com/Deploy-Forward/convoy@v1.2.0"
+python -m pip install "git+https://github.com/Deploy-Forward/convoy@v1.3.0"
 convoy --help
 convoy mcp --host 127.0.0.1 --port 8788
 ```

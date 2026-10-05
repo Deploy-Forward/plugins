@@ -12,6 +12,6 @@ If whoami says chair:null from a folder that is no worktree, run `convoy list`, 
 
 Attach proves your native session and seats it without launching anything. Repeat attach or bare local self-join reuses that chair; do not provision a second chair to receive this session's messages. Explicit names, titles, different worktrees and `join --launch` are the separate new-neuron provisioning flow.
 
-Use the returned root and chair for the receive loop. Detach before attaching to another thread. Sends queue until you drain and write a proven receipt. Unverified/claimed authorship never clears a pending item. Detached chairs keep their real inbox count but hooks do not drain them or pulse them.
+Use the returned root and chair for the receive loop. A session can sit on several threads (Convoy 1.3.0): attach adds this one and lists the others under `also_on`; pass `--root` on every command, because `whoami` and `detach` refuse with the list when the thread is ambiguous. Sends queue until you drain and write a proven receipt. Unverified/claimed authorship never clears a pending item. Detached chairs keep their real inbox count but hooks do not drain them or pulse them.
 
 On unavailable or conflicting identity, stop with the exact refusal; never guess a native session id, impersonate another chair or use convoy-add to replace the session merely to read mail.

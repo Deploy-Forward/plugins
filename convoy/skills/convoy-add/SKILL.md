@@ -70,8 +70,7 @@ convoy --root <root> crew --seat "<harness>,model=<model>,effort=<effort>,title=
   from, for example `git checkout -B <branch> origin/<lineage>`.
 - **Launched is not connected.** Brief the new neuron only after `await-seated` reads `connected`.
 - **A failed launch leaves the chair joined.** The card says `launched: false` and gives the retry in
-  `recovery[].verb`: `launch --seat <sessionId>` after a split or detached launch, `bring-up --seat <sessionId>` after a
-  new window. It already carries `--allow-unverified-launch` when the add did. Run it as printed (with `--root`); do
+  `recovery[].verb`: `launch --seat <sessionId>`, whichever placement failed. It already carries `--allow-unverified-launch` when the add did. Run it as printed (with `--root`); do
   not run `add` again for the same neuron.
 - **Consent first, then the retry.** When the card says `next: consent`, ask the person with
   `consent_request.prompt`. Only after their explicit yes, run `recovery[].grant` (`consent --grant <request_id>`), then

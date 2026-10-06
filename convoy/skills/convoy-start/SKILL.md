@@ -6,9 +6,9 @@ argument-hint: "[path | url | owner/repo | name]"
 
 # Start a Convoy thread
 
-Run `convoy start <name|owner/repo|git-url|local-path>` (or `python -m convoy start ...`). With no argument it returns a picker; ask the person which thread they want. Never choose a picker row for them.
+Run `convoy start <name|owner/repo|git-url|local-path>`. With no argument it returns a picker; ask the person which thread they want. Never choose a picker row for them.
 
-Start discovers local checkouts before cloning. Exact names can resolve automatically only after a complete local scan. Fuzzy names, multiple repositories, incomplete scans and unknown GitHub reads return choices or unknown, never a guessed project. A fresh indexed root has priority for 14 days; otherwise a unique main checkout wins. `--all` expands linked-worktree choices. `--search-root <folder>` and `--scan-budget <seconds>` bound local discovery. `--create` explicitly selects the new-folder flow.
+Start discovers local checkouts before cloning. Exact names can resolve automatically only after a complete local scan. Fuzzy names, multiple repositories, incomplete scans and unknown GitHub reads return choices or unknown, never a guessed project. A fresh indexed root has priority for 14 days; otherwise a unique main checkout wins. `--all` expands linked-worktree choices. `--search-root <folder>` and `--scan-budget <seconds>` bound local discovery. `--create` creates a private GitHub repository (`gh repo create <user>/<name> --private`) under the signed-in GitHub user, for a bare name that matches nothing; it needs an authenticated `gh`. A new local folder is the other choice the picker offers, and is not what `--create` does.
 
 An explicit local path is not refreshed. A reused cloud target gets one noninteractive fetch; only a clean, behind-only checkout advances with a local fast-forward-only merge. Dirty, ahead, diverged, detached, unknown or overlapping local files are kept with a reason. Never stash, reset or rebase to make start succeed.
 

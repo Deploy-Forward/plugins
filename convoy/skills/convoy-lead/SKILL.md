@@ -8,7 +8,7 @@ argument-hint: "[--to chair] [--as your chair]"
 
 ## Who leads
 
-Run `convoy --root <root> lead` (or `python -m convoy --root <root> lead`). It prints:
+Run `convoy --root <root> lead`. It prints:
 
 - `lead_chair`: the lead's chair sessionId, or null.
 - `lead`: the lead's harness name.

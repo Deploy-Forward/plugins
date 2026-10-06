@@ -6,17 +6,23 @@ argument-hint: "[--root path]"
 
 # Who am I on this thread
 
-Run `convoy --root <root> whoami` (or `python -m convoy --root <root> whoami`). It walks this session's own process
+Run `convoy --root <root> whoami`. It walks this session's own process
 and answers for THIS body only. It never names anyone else; to find another neuron's id, use `convoy-list`.
 
 Report these fields as printed, never filling in a null:
 
 - `chair`: your chair's sessionId on this thread, or null.
-- `via`: how it was proven, for example `environment` (your harness's own session id), `cwd` (only your folder), or
-  `pane-host`. `environment` is the strong proof; `cwd` alone is weak.
+- `via`: how it was proven. One of `environment` (your harness's own session id), `token` (the resume id on your
+  command line), `pane-host` (the pane Convoy launched you in), `worktree` (your worktree's path on your command
+  line), `cwd` (only your folder), or `conflict` (the proofs name different chairs), or null when no chair matches.
+  `environment` and `token` are strong; `pane-host` is strong only for receipts; `worktree` and `cwd` are weak. The
+  proofs are corroboration, not a ladder: none outranks another that disagrees with it. On `via: conflict`, stop and
+  report the `ask`; do not pick a chair.
 - `harness` and `harness_pid`: the harness this body is, and its process.
 - `on_thread`: whether that chair is on the thread at `<root>`.
-- `conflict`: true when two proofs disagree. Stop and report it; do not pick one.
+- `conflict`: true when your current folder belongs to another thread than `<root>`. It does not mean the proofs
+  disagree (that is `via: conflict`). Pass the `--root` of the thread you mean; with an explicit `--root` and proof by
+  `environment` or `token`, `whoami` reports `cwd_thread_differs` instead and `conflict` is false.
 
 Your neuron id (the `n` plus 6 hex that `send --id` takes) is on your row in `convoy list`.
 

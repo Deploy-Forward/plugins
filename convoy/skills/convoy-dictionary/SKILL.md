@@ -34,7 +34,7 @@ Rows marked **1.2.0** exist from Convoy 1.2.0. On an older CLI they are absent; 
 | heartbeat | The row a chair's turn-end hook writes. It shows the chair is alive; it is not a reply. | `convoy feed` |
 | wake | What starts an idle neuron's turn when a send arrives. It depends on the harness (see below). | the send card's `wake` |
 | attach / detach | Seat the session that is already running on a thread, or take it off. Attach never launches anything. From **1.3.0** one session can sit on several threads; pass `--root`. | `convoy attach`, `detach` |
-| whoami | Which chair THIS session is, and how that was proven (`environment`, `token` and `pane-host` are strong; `cwd` alone is weak). | `convoy whoami` |
+| whoami | Which chair THIS session is, and how that was proven (`environment` and `token` are strong; `pane-host` is strong only for receipts; `cwd` alone is weak). | `convoy whoami` |
 | worktree | The git worktree Convoy cut for a neuron. A neuron works only in its own. | the add card |
 | board, card | Worklanes: the hosted board, and one piece of work on it. Never "ticket" or "task". | the Worklanes tools |
 
@@ -51,7 +51,7 @@ Rows marked **1.2.0** exist from Convoy 1.2.0. On an older CLI they are absent; 
 | report your results to whoever launched you (**1.2.0**) | `convoy --root <root> report "..."` | (this page) |
 | answer a message you received (**1.2.0**) | `convoy --root <root> reply <token> "..."` | (this page) |
 | read your messages | `convoy --root <root> inbox --drain --seat <chair>`, then `reply` to each | neuron-receive, convoy-listen |
-| end your turn and hand off | `convoy --root <root> end` | convoy-end |
+| end your task and hand off | `convoy --root <root> end` | convoy-end |
 | leave a thread without closing your process | `convoy detach` (`--thread` when you are on several) | convoy-detach |
 | become the launcher of a neuron that has none (**1.3.0**) | `convoy adopt --id <neuron id>` | (this page) |
 
@@ -64,7 +64,8 @@ older than 1.2.0, answer with `convoy hook note "re token <token>: ..." --as-me 
 | Harness | When a send arrives while it is idle |
 |---|---|
 | codex | Woken through Codex's own queue (`wake: codex-queue-accepted`), once its Convoy hooks are trusted with `/hooks` and its first turn has recorded its session id (**1.2.0**). Otherwise `inbox-only`, with the reason. |
-| claude, grok | Not woken by Convoy itself. They wake only through a background waiter they armed before ending the turn (convoy-listen). |
+| claude | Not woken by Convoy itself. It wakes only through a background waiter it armed before ending the turn (convoy-listen). |
+| grok | During a turn, its inbox hook delivers the send at tool time. When it is idle, only a background waiter it armed before ending the turn wakes it (convoy-listen). |
 | cursor-agent, agy, hermes, pi | The message waits in the inbox until the neuron's next turn (neuron-receive). With the person's consent, `convoy nudge` can wake an idle pane (convoy-nudge). |
 
 The send card's `wake` and `why` say which case applied. A queue that accepted the message still proves nothing; only
@@ -79,9 +80,9 @@ working in, whichever pane has focus. The card's `window` names it.
 **A Linux or macOS machine or VM (Debian 13 included, or any headless box).**
 
 - Install into a virtual environment, because Debian refuses `pip install --user` (PEP 668):
-  `python3 -m venv ~/.convoy-venv && . ~/.convoy-venv/bin/activate && python -m pip install "git+https://github.com/Deploy-Forward/convoy@v1.3.0"`.
-- Install the skills with the repository's `node install.mjs --apply` (Grok, Cursor and other agents), or with the
-  plugin marketplace (Claude Code, Codex).
+  `python3 -m venv ~/.convoy-venv && . ~/.convoy-venv/bin/activate && python -m pip install "git+https://github.com/Deploy-Forward/convoy@v1.3.1"`.
+- Install the skills with the plugin marketplace (Claude Code, Codex, and Cursor, which loads the Claude Code
+  plugin), or with the repository's `node install.mjs --apply` (Grok and agy).
 - Inside tmux, `convoy add` splits your exact pane. Outside tmux, with tmux installed, each thread gets one detached
   tmux session named `convoy-<8 hex>` (**1.2.0**): the first neuron starts it, later ones split inside it, and the card
   prints the exact `tmux attach` command. With neither, it refuses before writing anything.

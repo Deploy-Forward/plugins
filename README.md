@@ -1,8 +1,18 @@
 # Deploy Forward plugins
 
-Marketplace for Convoy 1.0.1 and Worklanes 0.5.1. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
+Marketplace for Convoy 1.0.8 and Worklanes 0.5.4. Convoy 1.0.8 is written for the Convoy CLI v1.3.1. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
 
-## Install and update
+## Install by harness
+
+| Harness | How it gets the plugins |
+|---|---|
+| Claude Code | The marketplace: `claude plugin marketplace add Deploy-Forward/plugins`, then install `convoy@deploy-forward` and `worklanes@deploy-forward`. |
+| Codex | The marketplace: `codex plugin marketplace add https://github.com/Deploy-Forward/plugins.git`, then `codex plugin add convoy@deploy-forward` and `codex plugin add worklanes@deploy-forward`. |
+| Cursor | Loads the Claude Code plugin: install it for Claude Code. Nothing else to install. |
+| Grok | `node install.mjs --apply` copies the skills into `~/.convoy/skills/grok`. Add that folder to `[skills] paths` in `~/.grok/config.toml`; the installer prints the exact line. |
+| agy | `node install.mjs --apply` copies both plugins into `~/.gemini/config/plugins`. Then run `agy plugin enable convoy` and `agy plugin enable worklanes`, and restart agy. |
+
+## Claude Code: install and update
 
 In Claude Code:
 
@@ -37,7 +47,7 @@ Then run `/reload-plugins` in an open session. Verify the installed versions and
 
 For a local checkout, register the checkout root. Codex's marketplace manifest is `.agents/plugins/marketplace.json`; its plugin manifests live under each plugin's `.codex-plugin/`. Follow the installed client's plugin UI and inspect the selected version.
 
-Worklanes connects to the hosted board MCP using the person's OAuth approval. Convoy requires Python 3.11+, the matching Convoy release, and its loopback MCP at `http://127.0.0.1:8788/mcp`. MCP writes remain bearer-gated. This repository contains no credentials.
+Worklanes connects to the hosted board MCP using the person's OAuth approval. Convoy requires Python 3.11+, the Convoy CLI v1.3.1, and its loopback MCP at `http://127.0.0.1:8788/mcp`. MCP writes remain bearer-gated. This repository contains no credentials.
 
 ## One source per skill
 
@@ -47,17 +57,26 @@ Edit only `convoy/skills/<name>/SKILL.md` or `worklanes/skills/<name>/SKILL.md`.
 
 ```sh
 node scripts/render-skills.mjs
+node scripts/legacy-hashes.mjs
 node scripts/render-skills.mjs --check
-node --test test/*.test.mjs
+node --test
 ```
 
-The renderer synchronizes the agents/Codex skills, Codex discovery index, Cursor rules and Grok rules. Claude loads the canonical plugin skills. Marketplace entries use relative sources and omit versions; each plugin.json drives its version.
+The renderer writes `agents/skills/<name>/SKILL.md` (the copy the installer gives Grok) and `agy/plugins/<plugin>/` (the layout agy's own `agy plugin import` produces: `plugin.json`, `mcp_config.json` and the same skill bytes). Claude Code, Codex and Cursor load the canonical plugin skills. Marketplace entries use relative sources and omit versions; each plugin.json drives its version.
 
-## Optional skill-only installer
+`legacy-hashes.json` lists every superseded skill text in this repository's history, each with the commit and path it came from. `node scripts/legacy-hashes.mjs --check` fails when it is stale.
+
+## Installer for Grok and agy
 
 ```sh
-node install.mjs --dry-run --root <folder>
-node install.mjs --apply --root <folder>
+node install.mjs --dry-run
+node install.mjs --apply
+node install.mjs --check --scan <folder> [--scan <folder> ...] [--legacy <file.tsv>]
 ```
 
-Dry-run writes nothing. Apply backs up replaced files, preserves identical files, and never touches the target's `.claude-plugin` marketplace or registers MCP connections. It installs into the .claude, .codex, .agents, .cursor and .grok harness folders. Without `--root` it uses your user home; filesystem roots are refused. Preview the intended root before applying. Installing or updating this source does not grant permission to launch, merge, push or deploy.
+- `--dry-run` (the default) writes nothing and prints the plan.
+- `--apply` writes `~/.convoy/skills/grok/<name>/SKILL.md` and `~/.gemini/config/plugins/<plugin>/`, keeps identical files, and moves each file it replaces into `~/.skills-backup/<UTC timestamp>/obj/<n>`. The run's `manifest.json` is written before the first move and lists each file as `pending`, then `done`. Nothing is deleted.
+- `--root <folder>` installs under another folder instead of your home. Filesystem roots are refused, and so is any target inside a `.claude`, `.codex`, `.agents`, `.grok` or `.cursor` folder of your home or of a filesystem root.
+- `--check --scan` only reads. It lists each Convoy, Worklanes or neuron skill file under the folders you name as `TRACKED` (in a Git repository's index), `CANON` (this release), `LEGACY` (a superseded release, with its provenance) or `UNKNOWN`. `--legacy` adds rows (`hash<TAB>kind<TAB>provenance`) from a list you keep yourself.
+
+The installer never touches `<root>/.claude-plugin`, registers no marketplace and no MCP connection for Claude Code or Codex, and prints the commands to run yourself. Installing or updating this source does not grant permission to launch, merge, push or deploy.

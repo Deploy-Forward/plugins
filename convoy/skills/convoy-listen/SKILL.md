@@ -51,6 +51,9 @@ Run the command the Stop hook prints, not the python line quoted below.
 
 Two corrections to that quotation: use the command the Stop hook prints (`wait.wait_command`), which names the running interpreter, not the bare `python` command; and the Stop hook may ask more than once. If none is printed, ask the person. The Stop hook asks at most 3 turns in a row. Do not run the legacy inbox waiter alongside this dispatcher-managed waiter. Check for an existing session-owned waiter before arming another.
 
+Convoy up to 1.3.1 registers no wake route, so on a wake-enabled root every wake is held and the waiter returns only at
+its timeout. Until a release registers routes, drain your inbox by hand at the start of each turn.
+
 Drain only after proving the current, attached chair with whoami. Detached chairs retain their pending count but must not drain, pulse or re-arm. An unknown/claimed author cannot clear pending work. A pointer notification is not a message body or delivery proof.
 
 ## Rules
@@ -63,9 +66,11 @@ Drain only after proving the current, attached chair with whoami. Detached chair
   conductor wakes you another way. Claude Code stops background commands when the machine runs low on memory,
   whatever their size, and its notice says not to restart them: a smaller waiter does not avoid it. Until you start
   one again, nothing reaches you while you are idle.
-- Claude Code and Grok have hooks, installed by Convoy, that drain the inbox at tool time (`inbox --hook-pretooluse`);
-  never run that by hand, and still write the receipt. Codex, cursor-agent, agy, hermes and pi have no draining hook:
-  run steps 1 to 3 by hand every turn.
+- Claude Code and Grok have hooks, installed by Convoy in the worktrees it launches, that drain the inbox at tool
+  time (`inbox --hook-pretooluse`). Codex drains it after each tool call through the plugin's PostToolUse hook (the
+  same command), once its hooks are trusted with `/hooks`. Never run that command by hand, and still write the
+  receipt. `convoy attach` installs no hooks, so a session you attached drains by hand. cursor-agent, agy, hermes and
+  pi have no draining hook: run steps 1 to 3 by hand every turn.
 
 ## Done looks like
 

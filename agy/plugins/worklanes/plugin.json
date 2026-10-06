@@ -1,0 +1,6 @@
+{
+  "author": "Deploy Forward",
+  "description": "Work a Deploy Forward board through the hosted board MCP (OAuth) plus five skills to operate the board, manage boards, set up Agent wake, connect an agent, and hand a card to a machine. Done stays a person's press.",
+  "name": "worklanes",
+  "version": "0.5.4"
+}

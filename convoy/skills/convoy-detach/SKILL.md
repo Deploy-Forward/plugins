@@ -6,7 +6,7 @@ argument-hint: "[--thread cvy_ id]"
 
 # Detach this session
 
-When the person asks to detach the current session, run `convoy detach` (or `python -m convoy detach`). If more than one thread matches, ask which one and use `--thread <cvy_id|name>`; never guess or detach another chair.
+When the person asks to detach the current session, run `convoy detach`. If more than one thread matches, ask which one and use `--thread <cvy_id|name>`; never guess or detach another chair.
 
 Report the proven chair, detached:true and handoff path from the result. This preserves history and pending rows; it stops message wakes and refuses sends with 'detached; attach again'. It does not kill the session, close a pane, delete the thread or grant push/merge/deploy authority.
 

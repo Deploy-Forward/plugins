@@ -15,9 +15,9 @@ const install = (args, home, extraEnv = {}) => spawnSync(process.execPath, ['ins
   cwd: root, encoding: 'utf8', windowsHide: true, timeout: 60000,
   env: { ...process.env, HOME: home, USERPROFILE: home, ...extraEnv },
 });
-const tree = folder => existsSync(folder) ? readdirSync(folder, { withFileTypes: true }).flatMap(entry => {
+const tree = (folder, base = folder) => existsSync(folder) ? readdirSync(folder, { withFileTypes: true }).flatMap(entry => {
   const path = join(folder, entry.name);
-  return entry.isDirectory() ? tree(path) : [relative(folder, path).replaceAll('\\', '/')];
+  return entry.isDirectory() ? tree(path, base) : [relative(base, path).replaceAll('\\', '/')];
 }) : [];
 const snapshot = folder => tree(folder).map(p => `${p} ${statSync(join(folder, p)).mtimeMs} ${readFileSync(join(folder, p)).length}`).sort();
 const skillNames = () => readdirSync(resolve(root, 'agents', 'skills')).sort();

@@ -1,6 +1,6 @@
 # Worklanes plugin
 
-Worklanes 0.5.3 gives an agent the person's Deploy Forward boards through the hosted MCP at `https://app.deployforward.dev/api/mcp`. The person signs in and approves OAuth; no credential is packaged here.
+Worklanes 0.5.4 gives an agent the person's Deploy Forward boards through the hosted MCP at `https://app.deployforward.dev/api/mcp`. The person signs in and approves OAuth; no credential is packaged here.
 
 Worklanes is free while it is in preview. Paid plans for organisations will be announced before any charge.
 

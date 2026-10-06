@@ -1,0 +1,506 @@
+{
+  "schema": 1,
+  "hash": "sha256 of the text with every CR removed, first 12 hex digits",
+  "entries": [
+    {
+      "hash": "07755f36007f",
+      "provenance": "4825deb9bd8e:cursor/rules/convoy-add.mdc"
+    },
+    {
+      "hash": "08111df622b3",
+      "provenance": "c550a31531b8:convoy/skills/convoy-close/SKILL.md"
+    },
+    {
+      "hash": "09b406308fec",
+      "provenance": "c550a31531b8:convoy/skills/convoy-add/SKILL.md"
+    },
+    {
+      "hash": "0d3b0a160fd4",
+      "provenance": "12b17c9013dd:grok/rules/convoy-add.md"
+    },
+    {
+      "hash": "110d67a4d41f",
+      "provenance": "62125842f162:convoy/skills/convoy-add/SKILL.md"
+    },
+    {
+      "hash": "111f96266150",
+      "provenance": "58f817730d6c:grok/rules/convoy-operate.md"
+    },
+    {
+      "hash": "14798b9e303d",
+      "provenance": "c550a31531b8:cursor/rules/convoy-nudge.mdc"
+    },
+    {
+      "hash": "194c6bfcd7dd",
+      "provenance": "58f817730d6c:codex/AGENTS.md"
+    },
+    {
+      "hash": "196387781ad5",
+      "provenance": "c550a31531b8:worklanes/skills/worklanes-operate/SKILL.md"
+    },
+    {
+      "hash": "1fe2ad1e392d",
+      "provenance": "c550a31531b8:cursor/rules/convoy-detach.mdc"
+    },
+    {
+      "hash": "2139ecc0cf05",
+      "provenance": "4825deb9bd8e:convoy/skills/convoy-dictionary/SKILL.md"
+    },
+    {
+      "hash": "21d63144340f",
+      "provenance": "9d43f8921f8d:agents/skills/convoy-attach/SKILL.md"
+    },
+    {
+      "hash": "2860a7661ae6",
+      "provenance": "12b17c9013dd:convoy/skills/convoy-add/SKILL.md"
+    },
+    {
+      "hash": "2d82b2d97477",
+      "provenance": "c550a31531b8:agents/skills/convoy-listen/SKILL.md"
+    },
+    {
+      "hash": "2ec655c69f53",
+      "provenance": "c550a31531b8:agents/skills/convoy-list/SKILL.md"
+    },
+    {
+      "hash": "2fd538196d1e",
+      "provenance": "62125842f162:convoy/skills/convoy-whoami/SKILL.md"
+    },
+    {
+      "hash": "2fe761eeba2e",
+      "provenance": "c550a31531b8:worklanes/skills/worklanes-boards/SKILL.md"
+    },
+    {
+      "hash": "3ad38b1ab3a2",
+      "provenance": "c550a31531b8:convoy/skills/convoy-attach/SKILL.md"
+    },
+    {
+      "hash": "3bbced5f0461",
+      "provenance": "58f817730d6c:convoy/skills/convoy-whoami/SKILL.md"
+    },
+    {
+      "hash": "3c969a51dec5",
+      "provenance": "58f817730d6c:cursor/rules/convoy-operate.mdc"
+    },
+    {
+      "hash": "3f5dbc6c00de",
+      "provenance": "c550a31531b8:agents/skills/convoy-detach/SKILL.md"
+    },
+    {
+      "hash": "432b778f0c8f",
+      "provenance": "c550a31531b8:cursor/rules/convoy-attach.mdc"
+    },
+    {
+      "hash": "43d45ed4f2fc",
+      "provenance": "9d43f8921f8d:convoy/skills/convoy-dictionary/SKILL.md"
+    },
+    {
+      "hash": "456c3388fd9d",
+      "provenance": "4825deb9bd8e:grok/rules/convoy-add.md"
+    },
+    {
+      "hash": "46d2bed81947",
+      "provenance": "79008858a0af:cursor/rules/convoy-operate.mdc"
+    },
+    {
+      "hash": "4c7b4ea148ff",
+      "provenance": "c550a31531b8:worklanes/skills/worklanes-connect/SKILL.md"
+    },
+    {
+      "hash": "50704330b02d",
+      "provenance": "62125842f162:convoy/skills/convoy-detach/SKILL.md"
+    },
+    {
+      "hash": "513b336a6dce",
+      "provenance": "4825deb9bd8e:agents/skills/convoy-add/SKILL.md"
+    },
+    {
+      "hash": "5560821b1e9a",
+      "provenance": "c550a31531b8:agents/skills/convoy-send/SKILL.md"
+    },
+    {
+      "hash": "567e20b46a55",
+      "provenance": "58f817730d6c:grok/rules/convoy-whoami.md"
+    },
+    {
+      "hash": "59f5a475be31",
+      "provenance": "c550a31531b8:agents/skills/neuron-receive/SKILL.md"
+    },
+    {
+      "hash": "5d2851d05e4b",
+      "provenance": "79008858a0af:convoy/skills/convoy-operate/SKILL.md"
+    },
+    {
+      "hash": "5d7893460e41",
+      "provenance": "c550a31531b8:cursor/rules/convoy-operate.mdc"
+    },
+    {
+      "hash": "5d829032f695",
+      "provenance": "c550a31531b8:grok/rules/convoy-attach.md"
+    },
+    {
+      "hash": "5e0f756bee14",
+      "provenance": "4825deb9bd8e:agents/skills/convoy-dictionary/SKILL.md"
+    },
+    {
+      "hash": "616d9428cb75",
+      "provenance": "c550a31531b8:convoy/skills/convoy-listen/SKILL.md"
+    },
+    {
+      "hash": "61d528f28c8f",
+      "provenance": "c550a31531b8:worklanes/skills/worklanes-wake/SKILL.md"
+    },
+    {
+      "hash": "655b1d35ffca",
+      "provenance": "c550a31531b8:cursor/rules/convoy-add.mdc"
+    },
+    {
+      "hash": "661217563e73",
+      "provenance": "58f817730d6c:convoy/skills/convoy-lead/SKILL.md"
+    },
+    {
+      "hash": "66b36fe75e53",
+      "provenance": "c550a31531b8:grok/rules/convoy-end.md"
+    },
+    {
+      "hash": "6749dfddcdc9",
+      "provenance": "c550a31531b8:cursor/rules/worklanes-boards.mdc"
+    },
+    {
+      "hash": "6839bcb72981",
+      "provenance": "79008858a0af:agents/skills/convoy-operate/SKILL.md"
+    },
+    {
+      "hash": "685449f9e0ce",
+      "provenance": "c550a31531b8:grok/rules/convoy-send.md"
+    },
+    {
+      "hash": "686eac7ddb58",
+      "provenance": "c550a31531b8:grok/rules/convoy-nudge.md"
+    },
+    {
+      "hash": "6b1112b3ca99",
+      "provenance": "4825deb9bd8e:codex/AGENTS.md"
+    },
+    {
+      "hash": "6c1028254c9f",
+      "provenance": "c550a31531b8:convoy/skills/convoy-end/SKILL.md"
+    },
+    {
+      "hash": "6c2f9462d27b",
+      "provenance": "62125842f162:convoy/skills/convoy-attach/SKILL.md"
+    },
+    {
+      "hash": "6c5c9dc9a2c2",
+      "provenance": "c550a31531b8:grok/rules/worklanes-operate.md"
+    },
+    {
+      "hash": "70e312f9c2c1",
+      "provenance": "c550a31531b8:cursor/rules/convoy-send.mdc"
+    },
+    {
+      "hash": "74805b1b6353",
+      "provenance": "9d43f8921f8d:convoy/skills/convoy-attach/SKILL.md"
+    },
+    {
+      "hash": "776a31cff6b9",
+      "provenance": "4825deb9bd8e:agents/skills/convoy-listen/SKILL.md"
+    },
+    {
+      "hash": "78254684e7d0",
+      "provenance": "4825deb9bd8e:cursor/rules/convoy-listen.mdc"
+    },
+    {
+      "hash": "7a0aab6b8e0e",
+      "provenance": "c550a31531b8:grok/rules/convoy-detach.md"
+    },
+    {
+      "hash": "7c549d3c5a08",
+      "provenance": "9d43f8921f8d:cursor/rules/neuron-receive.mdc"
+    },
+    {
+      "hash": "7c846be5c32b",
+      "provenance": "c550a31531b8:cursor/rules/worklanes-operate.mdc"
+    },
+    {
+      "hash": "829c2e1f929c",
+      "provenance": "c550a31531b8:agents/skills/convoy-add/SKILL.md"
+    },
+    {
+      "hash": "837e090b4b12",
+      "provenance": "58f817730d6c:agents/skills/convoy-whoami/SKILL.md"
+    },
+    {
+      "hash": "840436be96dd",
+      "provenance": "c550a31531b8:convoy/skills/convoy-send/SKILL.md"
+    },
+    {
+      "hash": "85a106eee8d5",
+      "provenance": "c550a31531b8:grok/rules/convoy-operate.md"
+    },
+    {
+      "hash": "8606dbe01404",
+      "provenance": "79008858a0af:grok/rules/convoy-operate.md"
+    },
+    {
+      "hash": "8aecdbb33ccf",
+      "provenance": "62125842f162:worklanes/skills/worklanes-connect/SKILL.md"
+    },
+    {
+      "hash": "8cf90db84c26",
+      "provenance": "c550a31531b8:grok/rules/worklanes-handoff.md"
+    },
+    {
+      "hash": "8f67b1cbe71e",
+      "provenance": "4825deb9bd8e:grok/rules/convoy-operate.md"
+    },
+    {
+      "hash": "902b442bcbab",
+      "provenance": "4825deb9bd8e:cursor/rules/convoy-operate.mdc"
+    },
+    {
+      "hash": "9404dcfaf974",
+      "provenance": "62125842f162:convoy/skills/convoy-lead/SKILL.md"
+    },
+    {
+      "hash": "948e7f29f84c",
+      "provenance": "c550a31531b8:grok/rules/convoy-start.md"
+    },
+    {
+      "hash": "952a839c7444",
+      "provenance": "c550a31531b8:grok/rules/convoy-close.md"
+    },
+    {
+      "hash": "9623d3ca1da6",
+      "provenance": "c550a31531b8:cursor/rules/convoy-list.mdc"
+    },
+    {
+      "hash": "9a88c7069563",
+      "provenance": "62125842f162:convoy/skills/convoy-list/SKILL.md"
+    },
+    {
+      "hash": "9c139c823aa1",
+      "provenance": "9d43f8921f8d:grok/rules/neuron-receive.md"
+    },
+    {
+      "hash": "a07adcce463e",
+      "provenance": "c550a31531b8:cursor/rules/convoy-end.mdc"
+    },
+    {
+      "hash": "a6a265d8d975",
+      "provenance": "58f817730d6c:grok/rules/convoy-lead.md"
+    },
+    {
+      "hash": "a82704626b48",
+      "provenance": "c550a31531b8:cursor/rules/convoy-push.mdc"
+    },
+    {
+      "hash": "a85a4e961eff",
+      "provenance": "c550a31531b8:agents/skills/convoy-operate/SKILL.md"
+    },
+    {
+      "hash": "a98b449a8663",
+      "provenance": "4825deb9bd8e:convoy/skills/convoy-add/SKILL.md"
+    },
+    {
+      "hash": "aa8599531a22",
+      "provenance": "c550a31531b8:convoy/skills/convoy-start/SKILL.md"
+    },
+    {
+      "hash": "ab9f934149bf",
+      "provenance": "62125842f162:convoy/skills/convoy-start/SKILL.md"
+    },
+    {
+      "hash": "abf7dd3dafbb",
+      "provenance": "58f817730d6c:agents/skills/convoy-operate/SKILL.md"
+    },
+    {
+      "hash": "acdbb722e66f",
+      "provenance": "58f817730d6c:convoy/skills/convoy-operate/SKILL.md"
+    },
+    {
+      "hash": "adfab1847119",
+      "provenance": "9d43f8921f8d:cursor/rules/convoy-attach.mdc"
+    },
+    {
+      "hash": "b0ef4c6a8d2b",
+      "provenance": "c550a31531b8:worklanes/skills/worklanes-handoff/SKILL.md"
+    },
+    {
+      "hash": "b9b41e3dd991",
+      "provenance": "c550a31531b8:grok/rules/worklanes-connect.md"
+    },
+    {
+      "hash": "bb162ffaf582",
+      "provenance": "c550a31531b8:grok/rules/convoy-push.md"
+    },
+    {
+      "hash": "bc1574e54bca",
+      "provenance": "4825deb9bd8e:grok/rules/convoy-listen.md"
+    },
+    {
+      "hash": "be3914da517a",
+      "provenance": "c550a31531b8:grok/rules/neuron-receive.md"
+    },
+    {
+      "hash": "bfabda61a219",
+      "provenance": "c550a31531b8:convoy/skills/convoy-detach/SKILL.md"
+    },
+    {
+      "hash": "c183e7747310",
+      "provenance": "9d43f8921f8d:cursor/rules/convoy-dictionary.mdc"
+    },
+    {
+      "hash": "c3f835f2afc5",
+      "provenance": "c550a31531b8:codex/AGENTS.md"
+    },
+    {
+      "hash": "c3fa16f6e577",
+      "provenance": "12b17c9013dd:agents/skills/convoy-add/SKILL.md"
+    },
+    {
+      "hash": "c62aa1d81875",
+      "provenance": "c550a31531b8:agents/skills/worklanes-connect/SKILL.md"
+    },
+    {
+      "hash": "ca942c4dfbc9",
+      "provenance": "62125842f162:convoy/skills/convoy-send/SKILL.md"
+    },
+    {
+      "hash": "cb340d3eeeb6",
+      "provenance": "12b17c9013dd:cursor/rules/convoy-add.mdc"
+    },
+    {
+      "hash": "cc2df9085ce2",
+      "provenance": "c550a31531b8:cursor/rules/worklanes-wake.mdc"
+    },
+    {
+      "hash": "cddf97a5a093",
+      "provenance": "58f817730d6c:agents/skills/convoy-lead/SKILL.md"
+    },
+    {
+      "hash": "d059df5a9615",
+      "provenance": "c550a31531b8:convoy/skills/convoy-push/SKILL.md"
+    },
+    {
+      "hash": "d248781fba9c",
+      "provenance": "62125842f162:convoy/skills/convoy-listen/SKILL.md"
+    },
+    {
+      "hash": "d5564f351cc3",
+      "provenance": "4825deb9bd8e:convoy/skills/convoy-listen/SKILL.md"
+    },
+    {
+      "hash": "d9828a63239d",
+      "provenance": "9d43f8921f8d:grok/rules/convoy-dictionary.md"
+    },
+    {
+      "hash": "db3a74309f67",
+      "provenance": "c550a31531b8:cursor/rules/convoy-listen.mdc"
+    },
+    {
+      "hash": "dbb2de996c0a",
+      "provenance": "c550a31531b8:convoy/skills/neuron-receive/SKILL.md"
+    },
+    {
+      "hash": "dcfd550295af",
+      "provenance": "9d43f8921f8d:agents/skills/convoy-dictionary/SKILL.md"
+    },
+    {
+      "hash": "dd24fc348e48",
+      "provenance": "c550a31531b8:grok/rules/worklanes-boards.md"
+    },
+    {
+      "hash": "dd5f41c3f0bc",
+      "provenance": "4825deb9bd8e:agents/skills/convoy-operate/SKILL.md"
+    },
+    {
+      "hash": "df3576ead2c9",
+      "provenance": "4825deb9bd8e:grok/rules/convoy-dictionary.md"
+    },
+    {
+      "hash": "e3521759ea22",
+      "provenance": "58f817730d6c:cursor/rules/convoy-whoami.mdc"
+    },
+    {
+      "hash": "e6804b876ff2",
+      "provenance": "c550a31531b8:cursor/rules/worklanes-handoff.mdc"
+    },
+    {
+      "hash": "e7d35b8c7186",
+      "provenance": "c550a31531b8:agents/skills/convoy-start/SKILL.md"
+    },
+    {
+      "hash": "e8bf566e7e2f",
+      "provenance": "c550a31531b8:grok/rules/convoy-list.md"
+    },
+    {
+      "hash": "e9006b3a70d8",
+      "provenance": "4825deb9bd8e:cursor/rules/convoy-dictionary.mdc"
+    },
+    {
+      "hash": "e98931ae23dc",
+      "provenance": "c550a31531b8:grok/rules/convoy-listen.md"
+    },
+    {
+      "hash": "e99f48dcb1e5",
+      "provenance": "c550a31531b8:cursor/rules/convoy-close.mdc"
+    },
+    {
+      "hash": "ea134b3fe438",
+      "provenance": "4825deb9bd8e:convoy/skills/convoy-operate/SKILL.md"
+    },
+    {
+      "hash": "ecf256b8a1d4",
+      "provenance": "c550a31531b8:cursor/rules/convoy-start.mdc"
+    },
+    {
+      "hash": "effeef46eb48",
+      "provenance": "c550a31531b8:convoy/skills/convoy-nudge/SKILL.md"
+    },
+    {
+      "hash": "f138a2a7ef3a",
+      "provenance": "c550a31531b8:convoy/skills/convoy-list/SKILL.md"
+    },
+    {
+      "hash": "f16b91a832e9",
+      "provenance": "62125842f162:convoy/skills/neuron-receive/SKILL.md"
+    },
+    {
+      "hash": "f1bb64bff40f",
+      "provenance": "c550a31531b8:grok/rules/worklanes-wake.md"
+    },
+    {
+      "hash": "f32b1abc3853",
+      "provenance": "9d43f8921f8d:grok/rules/convoy-attach.md"
+    },
+    {
+      "hash": "f9ea89ceec4c",
+      "provenance": "c550a31531b8:agents/skills/convoy-attach/SKILL.md"
+    },
+    {
+      "hash": "fad793de4af3",
+      "provenance": "c550a31531b8:grok/rules/convoy-add.md"
+    },
+    {
+      "hash": "fb19a201854f",
+      "provenance": "12b17c9013dd:codex/AGENTS.md"
+    },
+    {
+      "hash": "fc313b5ee614",
+      "provenance": "c550a31531b8:cursor/rules/neuron-receive.mdc"
+    },
+    {
+      "hash": "fe8aee6e28e2",
+      "provenance": "c550a31531b8:cursor/rules/worklanes-connect.mdc"
+    },
+    {
+      "hash": "ff79570b892e",
+      "provenance": "c550a31531b8:convoy/skills/convoy-operate/SKILL.md"
+    },
+    {
+      "hash": "ffbdcf50c090",
+      "provenance": "58f817730d6c:cursor/rules/convoy-lead.mdc"
+    }
+  ]
+}

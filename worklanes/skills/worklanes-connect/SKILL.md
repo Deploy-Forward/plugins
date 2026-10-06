@@ -35,11 +35,13 @@ The app also has a Connect an agent page for people, at /connect.
 
 | Client | How it connects |
 |---|---|
-| Claude Code | Add the Deploy Forward marketplace with `/plugin marketplace add Deploy-Forward/plugins`, then install `worklanes@deploy-forward`. A local checkout uses `claude plugin marketplace add <checkout>`. The plugin's `.mcp.json` names the MCP; on first use, `/mcp` opens the consent page in the browser for the person's Allow. `node install.mjs` copies the skills only and adds no MCP. |
+| Claude Code | Add the Deploy Forward marketplace with `/plugin marketplace add Deploy-Forward/plugins`, then install `worklanes@deploy-forward`. A local checkout uses `claude plugin marketplace add <checkout>`. The plugin's `.mcp.json` names the MCP; on first use, `/mcp` opens the consent page in the browser for the person's Allow. `node install.mjs` does not install for Claude Code. |
 | Claude (claude.ai) | The Claude connector: Customize, Connectors, Add custom connector, with the MCP URL, then Connect and Allow. On a Team plan only an organisation owner can add a custom connector; a member sees the item greyed out. |
 | ChatGPT | The ChatGPT app: Developer mode on (Settings, Security), then Plugins, Browse plugins, Create app, named Deploy Forward, with the MCP URL (no query string) and OAuth. Press Connect, then Allow on the consent page, which opens as a popup; if none appears, allow popups for chatgpt.com. Menu names can vary by client version. |
 | Codex | `codex mcp add deploy-forward --url https://app.deployforward.dev/api/mcp`, then `codex mcp login deploy-forward` for OAuth. With a token from a pairing instead, add `--bearer-token-env-var DEPLOY_FORWARD_MCP_TOKEN` and keep the token in that environment variable. This plugin's Codex manifest carries the same MCP and skills. |
 | Grok CLI | In bash: `grok mcp add --transport http deploy-forward https://app.deployforward.dev/api/mcp --header "Authorization: Bearer $DEPLOY_FORWARD_MCP_TOKEN"`, with the token from a pairing in that variable. Never type the token itself on a command line: it lands in shell history. The shell expands the variable before Grok sees it, and Grok saves the header as given, so the token itself is stored in plaintext in `~/.grok/config.toml` (the default user scope): keep that file private, and never add the server with `--scope project`, which writes `./.grok/config.toml` into the working folder. |
+| Cursor | Cursor loads the skills from the Claude Code plugin. A Deploy Forward connection from Cursor has not been verified, so it is not supported yet. |
+| agy | `node install.mjs --apply` copies the worklanes plugin, with the board MCP URL, into agy's plugins folder; then `agy plugin enable worklanes`. Whether agy completes the board's OAuth consent has not been verified, so the connection is not supported yet. |
 | Grok Bot | The board's Grok Bot button (below). |
 
 ## On the board

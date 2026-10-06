@@ -6,7 +6,7 @@ argument-hint: "[--all] [--since 14d]"
 
 # List threads and neurons
 
-Run `convoy list` (or `python -m convoy list`). Show its output verbatim. Never pipe to head, truncate rows, merge columns, reformat identifiers or invent missing values. If the host cannot display the whole result, provide the complete output as an artifact and explicitly name that display limitation; do not imply a truncated view is complete.
+Run `convoy list`. Show its output verbatim. Never pipe to head, truncate rows, merge columns, reformat identifiers or invent missing values. If the host cannot display the whole result, provide the complete output as an artifact and explicitly name that display limitation; do not imply a truncated view is complete.
 
 Default lists usable recent threads. `--all` includes older/hidden usable threads with reasons; `--since <14d|ISO>` changes the time window. Temp, missing and unreadable roots are shown as skipped, never automatically deleted.
 

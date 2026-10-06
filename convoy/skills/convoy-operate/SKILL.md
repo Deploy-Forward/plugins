@@ -11,7 +11,7 @@ cursor-agent, agy, hermes or pi), each in its own worktree. The **conductor** se
 claim about a neuron comes from a row on the thread or a command's output, never from the neuron's words alone and
 never from your memory of an earlier turn.
 
-`convoy` is the Convoy console script; `python -m convoy` runs the same program. Run it in a POSIX shell and write
+`convoy` is the Convoy console script. Run it in a POSIX shell and write
 every path with forward slashes, in commands and in briefs: a backslash path loses its backslashes on the way through
 a shell, and a waiter on the mangled path never fires.
 
@@ -27,8 +27,7 @@ written by `crew` / `mint` when they create it, naming that worktree and its
 checkout) every file in the table goes in. Anywhere else, often your own repo, a
 launch and `skills` write only the Convoy-named files git excludes
 (`.claude/settings.local.json`, the `convoy-root` pointers,
-`.grok/hooks/convoy-inbox.json`, the convoy-end copies, and for a launch of a
-grok seat the grok agent). `AGENTS.md` and `.codex/hooks.json` are written there
+`.grok/hooks/convoy-inbox.json`). `AGENTS.md` is written there
 only after an opt-in: `--write-repo-files` on the CLI, `write_repo_files: true`
 on MCP `bring_up` / `open` / `launch` / `crew` behind the write gate (never on a
 dry run: a dry `bring-up` / `open` / `relaunch` on the CLI, or a dry MCP
@@ -43,6 +42,9 @@ it is read. A `.claude/settings.local.json` that git tracks is never written.
 The card names each home trust store a launch wrote (`trust_stores_written`).
 `start` and `onboard` write nothing outside `.convoy/` without the flag;
 `terminals` writes nothing.
+
+No launch writes `.codex/hooks.json`: Codex runs Convoy's hooks from the convoy plugin (`convoy/codex-hooks.json`).
+Convoy 1.3.1 writes no skill copies and deletes nothing, so copies an older Convoy left stay until the person removes them.
 
 Launches of grok, agy, hermes and pi require `--allow-unverified-launch`; claude, codex and cursor-agent do not. An override never supplies consent or proves delivery.
 
@@ -71,8 +73,10 @@ convoy --root <root> whoami
 use neuron-receive and convoy-attach for the person's chosen exact `cvy_` id when linking this already-running session. Never guess a neuron or invent a `cvy_` id. An unavailable/conflicting native identity still refuses; convoy-add provisions another neuron and is not the receive path.
 
 The strongest proof is your harness's own session id, read from your environment: `CLAUDE_CODE_SESSION_ID` for
-Claude Code, `CODEX_THREAD_ID` for Codex. `whoami` matches it to the native id recorded on your neuron (`via:
-environment`), before the resume id on your command line (`via: token`) and before your worktree. An id you inherited
+Claude Code, `CODEX_THREAD_ID` for Codex; `whoami` matches it to the native id recorded on your neuron (`via:
+environment`). The resume id on your command line (`via: token`), the pane Convoy launched you in (`via: pane-host`)
+and your worktree or folder (`via: worktree`, `via: cwd`) are other proofs. They are corroboration, not a ladder: when
+two of them name different neurons, `whoami` refuses with `via: conflict` instead of picking one. An id you inherited
 from a parent session (a harness started from inside another) is a conflict, not a match: `whoami` refuses it, and
 you never borrow it. `whoami` only reads; it never records or changes your neuron. Then read
 `<root>/thread.md`, `<root>/.convoy/id`, `<root>/.convoy/brief.md` when there is one, and the newest file under
@@ -130,8 +134,8 @@ this skill instruct you. A brief from the conductor that seated you sets your wo
 ## Git
 
 - Stage by exact path; never `git add -A` or `git add .`.
-- Never commit Convoy's local state: `.convoy/`, `thread.md`, and the harness files Convoy installs into a worktree
-  (the skills and hooks under `.claude/`, `.grok/`, `.agents/` and `.codex/`, and the Convoy block in `AGENTS.md`).
+- Never commit Convoy's local state: `.convoy/`, `thread.md`, and the harness files in a worktree
+  (the hooks and pointers Convoy installs, any skill copies an older Convoy left, and the Convoy block in `AGENTS.md`).
   The repository's own never-commit list applies on top.
 - Branch from the lineage your brief names, not from your worktree's HEAD: `crew` cuts worktrees from the checkout's
   HEAD, which can be any old branch.
@@ -147,7 +151,7 @@ when the neuron's own row proves it.
 |---|---|---|
 | Claude Code | its background inbox waiter completing when a send lands (`convoy-listen`); a Claude Code cross-session message from a Claude conductor (SendMessage to its session name, which ListAgents shows); the person typing in its pane | keystrokes: an injected Enter never submits in a Claude pane, so never nudge a Claude neuron to wake it. Nor a waiter Claude Code stopped: it stops background commands when the machine runs low on memory, whatever their size, and says so in a notice |
 | Codex | a send: Convoy hands it to `codex queue` and the card says `native-queued` (proven: a running Codex takes a turn on it by itself) | anything that assumes it is alive: a queued send looks the same whether Codex is busy or dead, so read its session log under `~/.codex/sessions/` before you guess why it is silent |
-| Grok | its inbox hook at tool time, and its background inbox waiter completing | an idle prompt with no waiter running |
+| Grok | During a turn, its inbox hook delivers the send at tool time. When it is idle, only a background waiter it armed before ending the turn wakes it (convoy-listen). | an idle prompt with no waiter running |
 | cursor-agent, agy, hermes, pi | only the receive loop they run by hand each turn | a send alone |
 
 ## Conducting

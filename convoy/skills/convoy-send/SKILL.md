@@ -40,7 +40,11 @@ For example, `send {"to": "n000000", "body": "<body>"}` uses a synthetic short i
 
 ## Write the body so it can be answered
 
-- Name yourself: a send carries no sender, so the body says which `sessionId` the receipt goes to.
+- Send from a session `whoami` proves on the thread by `environment`, `token`, `pane-host` or `worktree`. A proof by
+  `cwd` alone, or no chair at all, leaves the send with no sender, and the receiver's `convoy reply` refuses. A
+  session that is not on the thread attaches first (`convoy-attach`); that needs your harness's own session id. An
+  MCP send is signed by your conductor bearer.
+- Name yourself: the body says which `sessionId` the receipt goes to.
 - Ask for the token back: "acknowledge with a note citing token=<token>".
 - Write paths with forward slashes.
 - An order to merge or deploy puts the PR and its full head sha on its first line, and nothing else there.
@@ -64,9 +68,10 @@ your row is still pending there.
 - **Brief with a send, never with a note.** A `hook note ... --to <neuron>` writes a feed row and no inbox row, so the
   neuron never takes a turn on it.
 - **Whether a send wakes the neuron depends on its harness:** Codex wakes on it (proven, through `codex queue`);
-  Claude Code only while its inbox waiter is running, and Claude Code stops that waiter when memory runs low; Grok at
-  its next tool call or when its waiter completes; cursor-agent, agy, hermes and pi only when they run their receive
-  loop. See `convoy-operate`, Waking a neuron.
+  Claude Code only while its inbox waiter is running, and Claude Code stops that waiter when memory runs low. Grok:
+  During a turn, its inbox hook delivers the send at tool time. When it is idle, only a background waiter it armed before ending the turn wakes it (convoy-listen). cursor-agent, agy, hermes and pi only when they run their receive loop. On a root where
+  `convoy wake status` shows enabled, Convoy up to 1.3.1 registers no wake route, so the wake is held and no waiter returns
+  on it: the message waits for the neuron's next turn. See `convoy-operate`, Waking a neuron.
 - **One open question per neuron.** Do not resend a body that has no receipt yet; after 30 minutes, route the ask
   elsewhere and say so on the thread.
 - `refused` or `error` means nothing was sent; the card names why.

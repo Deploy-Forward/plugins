@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, mkdtempSync, mkdirSync, writeFileSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync, mkdtempSync, mkdirSync, writeFileSync, existsSync, statSync, symlinkSync } from 'node:fs';
 import { resolve, dirname, join, parse, relative } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
@@ -111,6 +111,21 @@ test('installer refuses to write into a harness folder of the home or of the fil
   for (const folder of ['.claude', '.codex', '.agents', '.grok', '.cursor']) {
     mkdirSync(join(home, folder));
     const result = install(['--apply', '--root', join(home, folder)], home);
+    assert.equal(result.status, 1, result.stdout);
+    assert.match(result.stderr, /refused: .*harness folder/);
+    assert.deepEqual(tree(join(home, folder)), []);
+  }
+  assert.equal(existsSync(join(home, '.skills-backup')), false);
+});
+
+test('installer refuses a root that reaches a harness folder through a junction or symlink', () => {
+  const home = sandbox('df-install-link-');
+  const elsewhere = sandbox('df-install-link-root-');
+  for (const folder of ['.claude', '.codex', '.agents', '.grok', '.cursor']) {
+    mkdirSync(join(home, folder));
+    const link = join(elsewhere, `to${folder}`);
+    symlinkSync(join(home, folder), link, 'junction');
+    const result = install(['--apply', '--root', link], home);
     assert.equal(result.status, 1, result.stdout);
     assert.match(result.stderr, /refused: .*harness folder/);
     assert.deepEqual(tree(join(home, folder)), []);

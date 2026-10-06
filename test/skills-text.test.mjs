@@ -43,6 +43,20 @@ test('convoy-whoami lists every via value as corroboration and defines conflict 
   assert.equal(text.includes('two proofs disagree'), false);
 });
 
+test('convoy-whoami relaxes conflict only for environment or token proof, and allows via null', () => {
+  const text = flat(skill('convoy-whoami'));
+  assert.ok(text.includes('with an explicit `--root` and proof by `environment` or `token`, `whoami` reports `cwd_thread_differs` instead and `conflict` is false'));
+  assert.equal(text.includes('with an explicit `--root` and a strong proof'), false);
+  assert.ok(text.includes('`pane-host` is strong only for receipts'));
+  assert.ok(text.includes('or null when no chair matches'));
+});
+
+test('the dictionary does not call pane-host a strong proof', () => {
+  const text = flat(skill('convoy-dictionary'));
+  assert.equal(text.includes('`environment`, `token` and `pane-host` are strong'), false);
+  assert.ok(text.includes('`environment` and `token` are strong; `pane-host` is strong only for receipts; `cwd` alone is weak'));
+});
+
 test('convoy-operate describes identity proofs as corroboration, not a ladder', () => {
   const text = flat(skill('convoy-operate'));
   assert.equal(text.includes('before the resume id on your command line'), false);
@@ -50,7 +64,7 @@ test('convoy-operate describes identity proofs as corroboration, not a ladder', 
 });
 
 test('convoy-start says --create makes a private GitHub repository', () => {
-  assert.ok(flat(skill('convoy-start')).includes('`--create` creates a private GitHub repository (`gh repo create <owner>/<name> --private`)'));
+  assert.ok(flat(skill('convoy-start')).includes('`--create` creates a private GitHub repository (`gh repo create <user>/<name> --private`)'));
 });
 
 test('the dictionary says end your task, never end your turn', () => {
@@ -72,9 +86,13 @@ test('convoy-listen matches the shipped hooks: Codex drains on PostToolUse, an a
   assert.ok(text.includes('no wake route'));
 });
 
-test('convoy-send says to attach before sending and that wake-enabled roots hold wakes on Convoy 1.3.0', () => {
+test('convoy-send names the proofs a reply needs, attach only off the thread, and that wake-enabled roots hold wakes on Convoy 1.3.0', () => {
   const text = flat(skill('convoy-send'));
-  assert.ok(text.includes('Attach to the thread before you send'));
+  assert.equal(text.includes('Attach to the thread before you send'), false);
+  assert.ok(text.includes('Send from a session `whoami` proves on the thread by `environment`, `token`, `pane-host` or `worktree`.'));
+  assert.ok(text.includes("A proof by `cwd` alone, or no chair at all, leaves the send with no sender, and the receiver's `convoy reply` refuses."));
+  assert.ok(text.includes("A session that is not on the thread attaches first (`convoy-attach`); that needs your harness's own session id."));
+  assert.ok(text.includes('An MCP send is signed by your conductor bearer.'));
   assert.ok(text.includes('no wake route'));
 });
 

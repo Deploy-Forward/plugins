@@ -1,7 +1,8 @@
 {
   "mcpServers": {
     "deploy-forward": {
-      "url": "https://app.deployforward.dev/api/mcp"
+      "url": "https://app.deployforward.dev/api/mcp",
+      "serverUrl": "https://app.deployforward.dev/api/mcp"
     }
   }
 }

@@ -17,12 +17,13 @@ for (const plugin of plugins) {
   rendered.set(`agy/plugins/${plugin}/plugin.json`, json({
     author: manifest.author.name, description: manifest.description, name: manifest.name, version: manifest.version,
   }));
-  // agy documents `url` for a remote server, and `agy plugin import` writes only `url`: write only `url`.
+  // agy documents `url` for a remote server and accepts `serverUrl` as the legacy key, but agy 1.3.0's
+  // `agy plugin validate` requires `serverUrl` (or `command`): write both, with the same value.
   const servers = JSON.parse(readFileSync(resolve(root, plugin, '.mcp.json'), 'utf8')).mcpServers;
   const agyServers = {};
   for (const [name, server] of Object.entries(servers)) {
     if (!server.url) throw new Error(`${plugin}/.mcp.json: ${name} has no url; only remote servers are rendered for agy`);
-    agyServers[name] = { url: server.url };
+    agyServers[name] = { url: server.url, serverUrl: server.url };
   }
   rendered.set(`agy/plugins/${plugin}/mcp_config.json`, json({ mcpServers: agyServers }));
   const names = readdirSync(resolve(root, plugin, 'skills')).sort();

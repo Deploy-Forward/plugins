@@ -44,7 +44,7 @@ test('both harness manifests agree on release versions and product author', () =
       if (harness === 'codex') {
         assert.equal(manifest.skills, './skills/');
         assert.equal(manifest.interface.developerName, 'Deploy Forward');
-        if (plugin === 'convoy') assert.ok(manifest.interface.longDescription.includes('pip install git+https://github.com/Deploy-Forward/convoy@v1.3.0'));
+        if (plugin === 'convoy') assert.ok(manifest.interface.longDescription.includes('pip install git+https://github.com/Deploy-Forward/convoy@v1.3.1'));
       }
     }
   }

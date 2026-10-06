@@ -67,7 +67,7 @@ test('retired render targets are gone: no grok rules, cursor rules or codex inde
   for (const folder of ['grok', 'cursor', 'codex']) assert.equal(existsSync(resolve(root, folder)), false, `${folder}/ still exists`);
 });
 
-test('agy plugins mirror each plugin: manifest fields, MCP servers by `url` only, skills byte-identical to the agents render', () => {
+test('agy plugins mirror each plugin: manifest fields, MCP servers by `url` and `serverUrl`, skills byte-identical to the agents render', () => {
   for (const plugin of ['convoy', 'worklanes']) {
     const claude = json(`${plugin}/.claude-plugin/plugin.json`);
     assert.deepEqual(json(`agy/plugins/${plugin}/plugin.json`), {
@@ -76,7 +76,9 @@ test('agy plugins mirror each plugin: manifest fields, MCP servers by `url` only
     const servers = json(`${plugin}/.mcp.json`).mcpServers;
     const agy = json(`agy/plugins/${plugin}/mcp_config.json`).mcpServers;
     assert.deepEqual(Object.keys(agy).sort(), Object.keys(servers).sort());
-    for (const [name, server] of Object.entries(servers)) assert.deepEqual(agy[name], { url: server.url });
+    // agy 1.3.0 `agy plugin validate` requires `serverUrl` (or `command`); its docs name `url` and accept `serverUrl`
+    // as the legacy key. Ship both, with the same value, so validate and the documented reader both pass.
+    for (const [name, server] of Object.entries(servers)) assert.deepEqual(agy[name], { url: server.url, serverUrl: server.url });
     const names = readdirSync(resolve(root, plugin, 'skills')).sort();
     assert.deepEqual(readdirSync(resolve(root, 'agy/plugins', plugin, 'skills')).sort(), names);
     for (const name of names) assert.equal(read(`agy/plugins/${plugin}/skills/${name}/SKILL.md`), read(`agents/skills/${name}/SKILL.md`));

@@ -1,0 +1,91 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { resolve, dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const read = path => readFileSync(resolve(root, path), 'utf8').replaceAll('\r\n', '\n');
+const skill = name => read(`convoy/skills/${name}/SKILL.md`);
+const flat = text => text.replace(/\s+/g, ' ');
+const files = folder => !existsSync(folder) ? [] : readdirSync(folder, { withFileTypes: true }).flatMap(entry => {
+  if (entry.name === '.git' || entry.name === 'node_modules' || entry.name === 'test') return [];
+  const path = join(folder, entry.name);
+  return entry.isDirectory() ? files(path) : [path];
+});
+
+// The one sentence every skill uses for how Grok receives and wakes.
+const GROK_WAKE = 'During a turn, its inbox hook delivers the send at tool time. When it is idle, only a background waiter it armed before ending the turn wakes it (convoy-listen).';
+
+test('no skill or doc offers a python -m convoy fallback: one script, convoy', () => {
+  for (const path of files(root)) {
+    if (!/\.(md|json|mjs)$/.test(path)) continue;
+    const text = readFileSync(path, 'utf8');
+    assert.equal(/python -m convoy(?![.\w])/.test(text), false, `python -m convoy fallback in ${path}`);
+  }
+});
+
+test('the Grok wake sentence is the same in the dictionary, convoy-operate and convoy-send', () => {
+  for (const name of ['convoy-dictionary', 'convoy-operate', 'convoy-send']) {
+    assert.ok(flat(skill(name)).includes(GROK_WAKE), `${name} lacks the Grok wake sentence`);
+  }
+  assert.equal(/\| claude, grok \|/.test(skill('convoy-dictionary')), false, 'claude and grok still share one wake row');
+  const row = skill('convoy-operate').split('\n').find(l => l.startsWith('| Grok |')) ?? '';
+  assert.ok(row.includes(GROK_WAKE), row);
+});
+
+test('convoy-whoami lists every via value as corroboration and defines conflict as the cwd being in another thread', () => {
+  const text = flat(skill('convoy-whoami'));
+  for (const via of ['environment', 'token', 'pane-host', 'worktree', 'cwd', 'conflict']) assert.ok(text.includes(`\`${via}\``), via);
+  assert.ok(text.includes('corroboration, not a ladder'));
+  assert.ok(text.includes('`via: conflict`'));
+  assert.ok(/`conflict`: true when your current folder belongs to another thread/.test(text));
+  assert.equal(text.includes('two proofs disagree'), false);
+});
+
+test('convoy-operate describes identity proofs as corroboration, not a ladder', () => {
+  const text = flat(skill('convoy-operate'));
+  assert.equal(text.includes('before the resume id on your command line'), false);
+  assert.ok(text.includes('corroboration, not a ladder'));
+});
+
+test('convoy-start says --create makes a private GitHub repository', () => {
+  assert.ok(flat(skill('convoy-start')).includes('`--create` creates a private GitHub repository (`gh repo create <owner>/<name> --private`)'));
+});
+
+test('the dictionary says end your task, never end your turn', () => {
+  assert.equal(/end your turn/i.test(skill('convoy-dictionary')), false);
+  assert.ok(skill('convoy-dictionary').includes('| end your task and hand off |'));
+});
+
+test('convoy-add names launch --seat as the only retry and drops the stale bring-up clause', () => {
+  const text = flat(skill('convoy-add'));
+  assert.equal(text.includes('bring-up --seat'), false);
+  assert.ok(text.includes('`launch --seat <sessionId>`'));
+});
+
+test('convoy-listen matches the shipped hooks: Codex drains on PostToolUse, an attached session drains by hand', () => {
+  const text = flat(skill('convoy-listen'));
+  assert.equal(text.includes('Codex, cursor-agent, agy, hermes and pi have no draining hook'), false);
+  assert.ok(text.includes('Codex drains it after each tool call through the plugin\'s PostToolUse hook'));
+  assert.ok(text.includes('`convoy attach` installs no hooks'));
+  assert.ok(text.includes('no wake route'));
+});
+
+test('convoy-send says to attach before sending and that wake-enabled roots hold wakes on Convoy 1.3.0', () => {
+  const text = flat(skill('convoy-send'));
+  assert.ok(text.includes('Attach to the thread before you send'));
+  assert.ok(text.includes('no wake route'));
+});
+
+test('install guidance: marketplace for Claude Code, Codex and Cursor; install.mjs for Grok and agy', () => {
+  const dictionary = flat(skill('convoy-dictionary'));
+  assert.ok(dictionary.includes('`node install.mjs --apply` (Grok and agy)'));
+  assert.equal(/install\.mjs --apply` \(Grok, Cursor/.test(dictionary), false);
+  const readme = flat(read('README.md'));
+  assert.ok(readme.includes('Convoy 1.0.8 and Worklanes 0.5.4'));
+  for (const row of ['| Claude Code |', '| Codex |', '| Cursor |', '| Grok |', '| agy |']) assert.ok(readme.includes(row), row);
+  const connect = read('worklanes/skills/worklanes-connect/SKILL.md');
+  assert.ok(/^\| Cursor \|/m.test(connect));
+  assert.ok(/^\| agy \|/m.test(connect));
+});

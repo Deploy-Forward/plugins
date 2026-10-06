@@ -32,7 +32,7 @@ test('marketplaces point to existing local plugins, omit version pins, use produ
 test('both harness manifests agree on release versions and product author', () => {
   assert.match(read('LICENSE'), /^MIT License\r?\n/);
   assert.match(read('LICENSE'), /Copyright \(c\) 2026 Deploy Forward/);
-  for (const [plugin, version] of [['convoy', '1.0.7'], ['worklanes', '0.5.3']]) {
+  for (const [plugin, version] of [['convoy', '1.0.8'], ['worklanes', '0.5.4']]) {
     for (const harness of ['claude', 'codex']) {
       const manifest = json(`${plugin}/.${harness}-plugin/plugin.json`);
       assert.equal(manifest.name, plugin);
@@ -53,7 +53,7 @@ test('both harness manifests agree on release versions and product author', () =
 test('all harness renders exactly match their canonical sources', () => {
   const result = run(['scripts/render-skills.mjs', '--check']);
   assert.equal(result.status, 0, result.stdout + result.stderr);
-  assert.match(result.stdout, /21 canonical skills; 64 rendered files; 0 failures/);
+  assert.match(result.stdout, /21 canonical skills; 46 rendered files; 0 failures/);
 });
 
 test('MCP sources retain loopback Convoy and hosted Worklanes boundaries', () => {
@@ -63,64 +63,24 @@ test('MCP sources retain loopback Convoy and hosted Worklanes boundaries', () =>
   assert.match(JSON.stringify(worklanes), /https:\/\/app\.deployforward\.dev\/api\/mcp/);
 });
 
-test('installer dry run is read-only; apply is idempotent and preserves target marketplace', () => {
-  const sandbox = mkdtempSync(join(tmpdir(), 'df-plugin-test-'));
-  const marketplace = join(sandbox, '.claude-plugin', 'marketplace.json');
-  mkdirSync(dirname(marketplace), { recursive: true });
-  writeFileSync(marketplace, 'owner-controlled sentinel\n');
-  let result = run(['install.mjs', '--dry-run', '--root', sandbox]);
-  assert.equal(result.status, 0, result.stderr);
-  assert.deepEqual(readdirSync(sandbox), ['.claude-plugin']);
-  assert.match(result.stdout, /claude plugin marketplace add/);
-  result = run(['install.mjs', '--apply', '--root', sandbox]);
-  assert.equal(result.status, 0, result.stderr);
-  assert.equal(readFileSync(marketplace, 'utf8'), 'owner-controlled sentinel\n');
-  for (const harness of ['.claude', '.codex', '.agents', '.grok']) {
-    for (const name of ['convoy-attach', 'convoy-detach', 'neuron-receive', 'convoy-whoami', 'convoy-lead', 'convoy-dictionary']) {
-      assert.equal(readFileSync(join(sandbox, harness, 'skills', name, 'SKILL.md'), 'utf8'), read(`agents/skills/${name}/SKILL.md`));
-    }
+test('retired render targets are gone: no grok rules, cursor rules or codex index', () => {
+  for (const folder of ['grok', 'cursor', 'codex']) assert.equal(existsSync(resolve(root, folder)), false, `${folder}/ still exists`);
+});
+
+test('agy plugins mirror each plugin: manifest fields, both MCP url keys, skills byte-identical to the agents render', () => {
+  for (const plugin of ['convoy', 'worklanes']) {
+    const claude = json(`${plugin}/.claude-plugin/plugin.json`);
+    assert.deepEqual(json(`agy/plugins/${plugin}/plugin.json`), {
+      author: claude.author.name, description: claude.description, name: plugin, version: claude.version,
+    });
+    const servers = json(`${plugin}/.mcp.json`).mcpServers;
+    const agy = json(`agy/plugins/${plugin}/mcp_config.json`).mcpServers;
+    assert.deepEqual(Object.keys(agy).sort(), Object.keys(servers).sort());
+    for (const [name, server] of Object.entries(servers)) assert.deepEqual(agy[name], { url: server.url, serverUrl: server.url });
+    const names = readdirSync(resolve(root, plugin, 'skills')).sort();
+    assert.deepEqual(readdirSync(resolve(root, 'agy/plugins', plugin, 'skills')).sort(), names);
+    for (const name of names) assert.equal(read(`agy/plugins/${plugin}/skills/${name}/SKILL.md`), read(`agents/skills/${name}/SKILL.md`));
   }
-  result = run(['install.mjs', '--apply', '--root', sandbox]);
-  assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /Nothing to change/);
-  assert.equal(readFileSync(marketplace, 'utf8'), 'owner-controlled sentinel\n');
-  assert.equal(readdirSync(sandbox).filter(name => name.startsWith('.skills-backup-')).length, 0);
-});
-
-test('installer replacement retains original bytes in backup', () => {
-  const sandbox = mkdtempSync(join(tmpdir(), 'df-plugin-replace-test-'));
-  const target = join(sandbox, '.agents', 'skills', 'convoy-attach', 'SKILL.md');
-  mkdirSync(dirname(target), { recursive: true });
-  writeFileSync(target, 'original owner text\n');
-  const result = run(['install.mjs', '--apply', '--root', sandbox]);
-  assert.equal(result.status, 0, result.stderr);
-  const backups = readdirSync(sandbox).filter(name => name.startsWith('.skills-backup-'));
-  assert.equal(backups.length, 1);
-  assert.equal(readFileSync(join(sandbox, backups[0], '.agents/skills/convoy-attach/SKILL.md'), 'utf8'), 'original owner text\n');
-  assert.equal(readFileSync(target, 'utf8'), read('agents/skills/convoy-attach/SKILL.md'));
-});
-
-test('blank install root refuses without selecting the system root', () => {
-  const result = run(['install.mjs', '--apply', '--root=']);
-  assert.equal(result.status, 2);
-  assert.match(result.stderr, /empty --root is refused/);
-});
-
-test('installer defaults to the user home, dry-run only', () => {
-  const sandbox = mkdtempSync(join(tmpdir(), 'df-plugin-home-test-'));
-  const result = spawnSync(process.execPath, ['install.mjs'], {
-    cwd: root, encoding: 'utf8', windowsHide: true, timeout: 30000,
-    env: { ...process.env, HOME: sandbox, USERPROFILE: sandbox },
-  });
-  assert.equal(result.status, 0, result.stderr);
-  assert.ok(result.stdout.includes(`root      ${sandbox}`));
-  assert.deepEqual(readdirSync(sandbox), []);
-});
-
-test('installer refuses a filesystem root before any write', () => {
-  const result = run(['install.mjs', '--dry-run', '--root', parse(root).root]);
-  assert.equal(result.status, 2);
-  assert.match(result.stderr, /filesystem root is refused/);
 });
 
 const liveNeuron = /\bn(?!000000\b)[0-9a-f]{6}\b/i;

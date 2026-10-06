@@ -62,7 +62,7 @@ node scripts/render-skills.mjs --check
 node --test
 ```
 
-The renderer writes `agents/skills/<name>/SKILL.md` (the copy the installer gives Grok) and `agy/plugins/<plugin>/` (the layout agy's own `agy plugin import` produces: `plugin.json`, `mcp_config.json` and the same skill bytes). Claude Code, Codex and Cursor load the canonical plugin skills. Marketplace entries use relative sources and omit versions; each plugin.json drives its version.
+The renderer writes `agents/skills/<name>/SKILL.md` (the copy the installer gives Grok) and `agy/plugins/<plugin>/` (the agy plugin layout: `plugin.json`, `mcp_config.json` with `serverUrl` added beside `url` so that `agy plugin validate` passes, and the same skill bytes). Claude Code, Codex and Cursor load the canonical plugin skills. Marketplace entries use relative sources and omit versions; each plugin.json drives its version.
 
 `legacy-hashes.json` lists every superseded skill text in this repository's history, each with the commit and path it came from. `node scripts/legacy-hashes.mjs --check` fails when it is stale.
 

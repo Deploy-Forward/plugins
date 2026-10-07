@@ -101,7 +101,7 @@ test('install guidance: marketplace for Claude Code, Codex and Cursor; install.m
   assert.ok(dictionary.includes('`node install.mjs --apply` (Grok and agy)'));
   assert.equal(/install\.mjs --apply` \(Grok, Cursor/.test(dictionary), false);
   const readme = flat(read('README.md'));
-  assert.ok(readme.includes('Convoy 1.0.8 and Worklanes 0.5.4'));
+  assert.ok(readme.includes('Convoy 1.0.9 and Worklanes 0.5.4'));
   for (const row of ['| Claude Code |', '| Codex |', '| Cursor |', '| Grok |', '| agy |']) assert.ok(readme.includes(row), row);
   const connect = read('worklanes/skills/worklanes-connect/SKILL.md');
   assert.ok(/^\| Cursor \|/m.test(connect));
@@ -142,20 +142,34 @@ test('convoy-operate quotes the Convoy 1.3.1 first-run policy word for word', ()
   assert.equal(text.includes('the skills and hooks under `.claude/`'), false);
 });
 
-test('the plugins are paired with the Convoy CLI 1.3.1: every install line and pairing names v1.3.1', () => {
-  const stale = [/convoy@v1\.3\.0/, /CLI v?1\.3\.0/, /Convoy 1\.3\.0 registers no wake route/];
+test('the plugins are paired with the Convoy CLI 1.3.2: every install line and pairing names v1.3.2', () => {
+  const stale = [/convoy@v1\.3\.[01]\b/, /CLI v?1\.3\.[01]\b/, /Convoy 1\.3\.0 registers no wake route/];
   for (const path of files(root)) {
     if (!/\.(md|json|mjs)$/.test(path) || path.endsWith('legacy-hashes.json')) continue;
     const text = readFileSync(path, 'utf8');
     for (const pattern of stale) assert.equal(pattern.test(text), false, `${pattern} in ${path}`);
   }
-  const install = 'git+https://github.com/Deploy-Forward/convoy@v1.3.1';
-  assert.ok(flat(read('README.md')).includes('Convoy 1.0.8 is written for the Convoy CLI v1.3.1.'));
-  assert.ok(flat(read('README.md')).includes('the Convoy CLI v1.3.1, and its loopback MCP'));
-  assert.ok(read('convoy/README.md').includes('(plugin 1.0.8, for the Convoy CLI 1.3.1)'));
+  const install = 'git+https://github.com/Deploy-Forward/convoy@v1.3.2';
+  assert.ok(flat(read('README.md')).includes('Convoy 1.0.9 is written for the Convoy CLI v1.3.2.'));
+  assert.ok(flat(read('README.md')).includes('the Convoy CLI v1.3.2, and its loopback MCP'));
+  assert.ok(read('convoy/README.md').includes('(plugin 1.0.9, for the Convoy CLI 1.3.2)'));
   assert.ok(read('convoy/README.md').includes(`python -m pip install "${install}"`));
   assert.ok(skill('convoy-dictionary').includes(`python -m pip install "${install}"`));
   const codex = JSON.parse(read('convoy/.codex-plugin/plugin.json'));
   assert.ok(codex.interface.longDescription.includes(`pip install ${install}`));
   for (const name of ['convoy-listen', 'convoy-send']) assert.ok(flat(skill(name)).includes('Convoy up to 1.3.1 registers no wake route'), name);
+});
+
+test('Convoy is local only: no file offers convoy.bot as an MCP, a tunnel or a hosted Convoy', () => {
+  for (const path of files(root)) {
+    if (!/\.(md|json|mjs)$/.test(path) || path.endsWith('legacy-hashes.json')) continue;
+    const text = readFileSync(path, 'utf8');
+    assert.equal(/convoy\.bot\/|convoy\.bot\/mcp|tunnel|cloudflare|hosted (MCP )?conductor|hosted Convoy/i.test(text), false, path);
+    if (!path.replaceAll('\\', '/').endsWith('convoy/.codex-plugin/plugin.json')) assert.equal(text.includes('convoy.bot'), false, `convoy.bot in ${path}`);
+  }
+  const codex = JSON.parse(read('convoy/.codex-plugin/plugin.json'));
+  assert.equal(codex.homepage, 'https://convoy.bot');
+  assert.equal(codex.interface.websiteURL, 'https://convoy.bot');
+  assert.equal(JSON.stringify(codex).match(/convoy\.bot/g).length, 2);
+  assert.ok(flat(skill('convoy-dictionary')).includes('An MCP conductor (an agent writing over the loopback MCP with a bearer)'));
 });

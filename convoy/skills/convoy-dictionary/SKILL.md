@@ -23,7 +23,7 @@ Rows marked **1.2.0** exist from Convoy 1.2.0. On an older CLI they are absent; 
 | harness | The agent program: `claude`, `codex`, `grok`, `cursor-agent`, `agy`, `hermes`, `pi`. | `convoy choices` |
 | model `auto` | No model or effort flag is passed; the harness starts on its own default. The default for `convoy add`. | the add card |
 | lead | The one chair that leads the thread. Its state is `none`, `dangling` (its chair is gone) or `held`. | `convoy lead` |
-| conductor | Two uses. On the lead and attach cards, `conductor` is the lead's chair (or null): an ordinary neuron that answers with `convoy reply`. A hosted MCP conductor (an agent writing over the MCP with a bearer) asks for work through sends and never authors a `note`. | `convoy lead`; `.convoy/conductor.md` |
+| conductor | Two uses. On the lead and attach cards, `conductor` is the lead's chair (or null): an ordinary neuron that answers with `convoy reply`. An MCP conductor (an agent writing over the loopback MCP with a bearer) asks for work through sends and never authors a `note`. | `convoy lead`; `.convoy/conductor.md` |
 | launcher (**1.2.0**) | Who launched a neuron, recorded as `launched_by`: a chair seated on the thread, or `{kind: conductor, name}` for a launch through the MCP tools. From **1.3.0** a launch that cannot prove its launcher refuses instead of recording null; a neuron that has none gets one with `convoy adopt`. | `convoy whoami` |
 | send | One message to one chair. It returns a `token`. A send is never proof of delivery. | the send card |
 | token | The id of one send. A receipt cites it. | the send card |
@@ -80,7 +80,7 @@ working in, whichever pane has focus. The card's `window` names it.
 **A Linux or macOS machine or VM (Debian 13 included, or any headless box).**
 
 - Install into a virtual environment, because Debian refuses `pip install --user` (PEP 668):
-  `python3 -m venv ~/.convoy-venv && . ~/.convoy-venv/bin/activate && python -m pip install "git+https://github.com/Deploy-Forward/convoy@v1.3.1"`.
+  `python3 -m venv ~/.convoy-venv && . ~/.convoy-venv/bin/activate && python -m pip install "git+https://github.com/Deploy-Forward/convoy@v1.3.2"`.
 - Install the skills with the plugin marketplace (Claude Code, Codex, and Cursor, which loads the Claude Code
   plugin), or with the repository's `node install.mjs --apply` (Grok and agy).
 - Inside tmux, `convoy add` splits your exact pane. Outside tmux, with tmux installed, each thread gets one detached

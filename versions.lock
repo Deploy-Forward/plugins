@@ -3,8 +3,8 @@
   "algorithm": "sha256-git-blobs-base64url",
   "plugins": {
     "convoy": {
-      "version": "1.0.8",
-      "hash": "5nBoxlgTpRahqz_WpebTNoKVaQebcMmNDyKY4eajqeI"
+      "version": "1.0.9",
+      "hash": "ezhTkpVYTCs4Hg5vpm17SI0pv7UIwqJSTkbe1UaJp8U"
     },
     "worklanes": {
       "version": "0.5.4",

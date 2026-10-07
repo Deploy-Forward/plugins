@@ -55,6 +55,10 @@
       "provenance": "12b17c9013dd:convoy/skills/convoy-add/SKILL.md"
     },
     {
+      "hash": "2887392d2217",
+      "provenance": "7e9b8f1fa672:convoy/skills/convoy-dictionary/SKILL.md"
+    },
+    {
       "hash": "2d82b2d97477",
       "provenance": "c550a31531b8:agents/skills/convoy-listen/SKILL.md"
     },
@@ -297,6 +301,10 @@
     {
       "hash": "a85a4e961eff",
       "provenance": "c550a31531b8:agents/skills/convoy-operate/SKILL.md"
+    },
+    {
+      "hash": "a8e8bda97c0c",
+      "provenance": "7e9b8f1fa672:agents/skills/convoy-dictionary/SKILL.md"
     },
     {
       "hash": "a98b449a8663",

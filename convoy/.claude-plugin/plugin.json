@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "convoy",
   "displayName": "Convoy",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Run several coding agents on one Convoy thread from any harness: start or reopen a thread, add agents, send and listen with receipts, wake, close, push and end. Each skill gives the command that works today.",
   "author": {
     "name": "Deploy Forward"

@@ -1,6 +1,6 @@
 # Deploy Forward plugins
 
-Marketplace for Convoy 1.0.9 and Worklanes 0.5.4. Convoy 1.0.9 is written for the Convoy CLI v1.3.2. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
+Marketplace for Convoy 1.0.10 and Worklanes 0.5.4. Convoy 1.0.10 is written for the Convoy CLI v1.3.3. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
 
 ## Install by harness
 
@@ -47,7 +47,7 @@ Then run `/reload-plugins` in an open session. Verify the installed versions and
 
 For a local checkout, register the checkout root. Codex's marketplace manifest is `.agents/plugins/marketplace.json`; its plugin manifests live under each plugin's `.codex-plugin/`. Follow the installed client's plugin UI and inspect the selected version.
 
-Worklanes connects to the hosted board MCP using the person's OAuth approval. Convoy requires Python 3.11+, the Convoy CLI v1.3.2, and its loopback MCP at `http://127.0.0.1:8788/mcp`. MCP writes remain bearer-gated. This repository contains no credentials.
+Worklanes connects to the hosted board MCP using the person's OAuth approval. Convoy requires Python 3.11+, the Convoy CLI v1.3.3, and its loopback MCP at `http://127.0.0.1:8788/mcp`. MCP writes remain bearer-gated. This repository contains no credentials.
 
 ## One source per skill
 

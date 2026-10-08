@@ -39,6 +39,8 @@ convoy neurons --all
   real keys; relay those words and stop.
 - `--checkout` is the checkout the new worktree is cut from (default: the root). Omit `--thread` unless you know the
   bound thread name: it must match exactly. `--title` names the chair (default `<harness>-<n>`).
+- `--here` opts into a split of the window you are already working in, instead of the thread's own window or pane.
+  See `--here` below; never pass it unless the person asked for the neuron beside them.
 - `--dry-run` writes nothing. It reports the `placement`, the `argv` it would run, and, for a detached session,
   `session_name` and `attach`. It refuses a title the live run would refuse.
 
@@ -51,7 +53,25 @@ The card's `placement` is one of:
 - `detached`: on Linux or macOS outside tmux with tmux installed, the thread's one detached tmux session. Give the person the
   card's `attach` command exactly as printed (`tmux attach -t =convoy-<8 hex>`). If tmux refused the session,
   the card says `launched: false` with tmux's own words.
+- `here`: only when the person asked for `--here` (below); never chosen automatically.
 - `none`: nowhere to launch (no terminal to split and no tmux). Nothing was written. Relay `placement_reason`.
+
+## `--here`
+
+`--here` is the person's explicit opt-in to split the window they are already working in, instead of the thread's
+own window or pane. Ask for it only when the person wants this neuron seated beside them right now; otherwise leave
+it off and let the automatic placement above take it. The same flag works on the retry verb,
+`convoy --root <root> launch --seat <sessionId> --here`, and the MCP launch tool takes the same choice as an
+optional boolean, `here`.
+
+- On Windows: `wt -w 0 split-pane`, a split of whichever pane has focus in the most recently used window — the
+  window the person is working in. Always a split, never a new tab.
+- Inside tmux: a split of the caller's exact pane, the same split placement gets by default.
+- Outside tmux on a POSIX system, or on Windows without Windows Terminal, `--here` refuses before writing anything:
+  no worktree, no chair. The card names `thread-window` and `detached` as the alternatives; it never falls back to
+  either on its own.
+- The card's `placement` says `"here"`, with no `window` and no `attach`. State `placement: here` from the card in
+  your report, the same way you'd quote any other placement.
 
 ## Many neurons at once
 

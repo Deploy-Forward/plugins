@@ -107,8 +107,16 @@
       "provenance": "79008858a0af:cursor/rules/convoy-operate.mdc"
     },
     {
+      "hash": "4c2a842cf71d",
+      "provenance": "fd1d55f565e0:agents/skills/convoy-dictionary/SKILL.md"
+    },
+    {
       "hash": "4c7b4ea148ff",
       "provenance": "c550a31531b8:worklanes/skills/worklanes-connect/SKILL.md"
+    },
+    {
+      "hash": "4d066d3135bc",
+      "provenance": "fd1d55f565e0:convoy/skills/convoy-dictionary/SKILL.md"
     },
     {
       "hash": "50704330b02d",
@@ -183,6 +191,10 @@
       "provenance": "c550a31531b8:grok/rules/convoy-nudge.md"
     },
     {
+      "hash": "68eec29b1e27",
+      "provenance": "7e9b8f1fa672:convoy/skills/convoy-add/SKILL.md"
+    },
+    {
       "hash": "6b1112b3ca99",
       "provenance": "4825deb9bd8e:codex/AGENTS.md"
     },
@@ -201,6 +213,10 @@
     {
       "hash": "70e312f9c2c1",
       "provenance": "c550a31531b8:cursor/rules/convoy-send.mdc"
+    },
+    {
+      "hash": "74192645f261",
+      "provenance": "7e9b8f1fa672:agents/skills/convoy-add/SKILL.md"
     },
     {
       "hash": "74805b1b6353",

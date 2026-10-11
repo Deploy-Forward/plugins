@@ -3,6 +3,10 @@
   "hash": "sha256 of the text with every CR removed, first 12 hex digits",
   "entries": [
     {
+      "hash": "05cfed64ece4",
+      "provenance": "62125842f162:worklanes/skills/worklanes-wake/SKILL.md"
+    },
+    {
       "hash": "07755f36007f",
       "provenance": "4825deb9bd8e:cursor/rules/convoy-add.mdc"
     },
@@ -137,6 +141,10 @@
     {
       "hash": "59f5a475be31",
       "provenance": "c550a31531b8:agents/skills/neuron-receive/SKILL.md"
+    },
+    {
+      "hash": "5b61c369ee4f",
+      "provenance": "c550a31531b8:agents/skills/worklanes-wake/SKILL.md"
     },
     {
       "hash": "5d2851d05e4b",
@@ -355,8 +363,16 @@
       "provenance": "9d43f8921f8d:cursor/rules/convoy-attach.mdc"
     },
     {
+      "hash": "af08c14a49c0",
+      "provenance": "c550a31531b8:agents/skills/worklanes-operate/SKILL.md"
+    },
+    {
       "hash": "b0ef4c6a8d2b",
       "provenance": "c550a31531b8:worklanes/skills/worklanes-handoff/SKILL.md"
+    },
+    {
+      "hash": "b7a5371d0756",
+      "provenance": "62125842f162:worklanes/skills/worklanes-operate/SKILL.md"
     },
     {
       "hash": "b9b41e3dd991",

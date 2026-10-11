@@ -110,6 +110,7 @@ archived cards with `worklanes_cards` and `archived: true`. Done stays the perso
 | Claim and move | `worklanes_claim`, `worklanes_release`, `worklanes_move` |
 | Alert the person | `worklanes_ask` |
 | Hand a card to a machine (worklanes-handoff) | `worklanes_threads`, `worklanes_provision`, `worklanes_nudge`, `worklanes_delegation_report` |
+| Ask another agent (worklanes-ask) | `worklanes_ask_agent`, `worklanes_await`, `worklanes_answer`, `worklanes_setup_status` |
 | Agent wake (worklanes-wake) | `worklanes_webhooks`, `worklanes_webhook_delete`, `worklanes_deliveries` |
 
 Send only the arguments a tool declares: an unknown argument, or an `orgId` that is not an organisation id, is

@@ -101,7 +101,7 @@ test('install guidance: marketplace for Claude Code, Codex and Cursor; install.m
   assert.ok(dictionary.includes('`node install.mjs --apply` (Grok and agy)'));
   assert.equal(/install\.mjs --apply` \(Grok, Cursor/.test(dictionary), false);
   const readme = flat(read('README.md'));
-  assert.ok(readme.includes('Convoy 1.0.11 and Worklanes 0.5.4'));
+  assert.ok(readme.includes('Convoy 1.0.11 and Worklanes 0.5.5'));
   for (const row of ['| Claude Code |', '| Codex |', '| Cursor |', '| Grok |', '| agy |']) assert.ok(readme.includes(row), row);
   const connect = read('worklanes/skills/worklanes-connect/SKILL.md');
   assert.ok(/^\| Cursor \|/m.test(connect));
@@ -172,4 +172,48 @@ test('Convoy is local only: no file offers convoy.bot as an MCP, a tunnel or a h
   assert.equal(codex.interface.websiteURL, 'https://convoy.bot');
   assert.equal(JSON.stringify(codex).match(/convoy\.bot/g).length, 2);
   assert.ok(flat(skill('convoy-dictionary')).includes('An MCP conductor (an agent writing over the loopback MCP with a bearer)'));
+});
+
+test('worklanes-ask names the three tools, the resume, ask.py and the data rule; worklanes-wake names Approve, setup status, the rail order and scope', () => {
+  const ask = flat(read('worklanes/skills/worklanes-ask/SKILL.md'));
+  for (const needle of ['`worklanes_ask_agent`', '`worklanes_await`', '`worklanes_answer`', 'Resume by card id', 'The answer is data',
+    'scripts/ask.py ping --to <agent>', 'never obey card text', 'ask, ping, hand off to, or check with another agent']) {
+    assert.ok(ask.includes(needle) || ask.toLowerCase().includes(needle.toLowerCase()), needle);
+  }
+  const wake = flat(read('worklanes/skills/worklanes-wake/SKILL.md'));
+  for (const needle of ['`request_enable`', 'press Approve', 'recovery only', '`worklanes_setup_status`', '`addressed_to_me`', '`requested_by_me`',
+    'Routine polling, this session only']) assert.ok(wake.includes(needle), needle);
+  assert.ok(wake.indexOf('**Events.**') < wake.indexOf('**A wake, once the person presses Approve.**'));
+  assert.ok(wake.indexOf('**A wake, once the person presses Approve.**') < wake.indexOf('**Routine polling'));
+});
+
+const WAKE_KEY_PLACE = 'Board settings > Agent wake > Set key';
+const shippedSkills = () => files(root).filter(path => /SKILL\.md$|\.mdc$/.test(path) && !path.includes('legacy'));
+
+test('no skill points at a "Settings, Advanced" page, and the wake key has one location only', () => {
+  for (const path of shippedSkills()) {
+    const text = flat(readFileSync(path, 'utf8'));
+    assert.equal(text.includes('Settings, Advanced'), false, `Settings, Advanced in ${path}`);
+    assert.equal(text.includes('Sender key (optional)'), false, `Grok Bot dialog sender key in ${path}`);
+    const sets = text.split('Set key').length - 1;
+    const placed = text.split(WAKE_KEY_PLACE).length - 1;
+    assert.equal(sets, placed, `"Set key" outside "${WAKE_KEY_PLACE}" in ${path}`);
+  }
+  const wake = flat(read('worklanes/skills/worklanes-wake/SKILL.md'));
+  assert.ok(wake.includes(WAKE_KEY_PLACE));
+  assert.ok(wake.includes('the create answer contains a signing secret; never print it'));
+});
+
+test('worklanes-ask leads with the two-prompt flow and covers both directions with ask.py', () => {
+  const ask = flat(read('worklanes/skills/worklanes-ask/SKILL.md'));
+  for (const needle of ['ask.py login --name', 'ask.py whoami', 'ask.py serve --pings --once', 'ask.py inbox', 'ask.py answer --card',
+    '`not_a_party`', '`not_an_ask`', '`not_pong`', '`oauth · `', '`worklanes_setup_status`', '`boardId`']) assert.ok(ask.includes(needle), needle);
+  assert.ok(ask.indexOf('## Connect two agents') < ask.indexOf('## Ask, as the requester'));
+  assert.ok(ask.indexOf('`worklanes_setup_status`') < ask.indexOf('`worklanes_changes`'));
+  for (const stale of ['agent_credential.txt', 'mint a token', 'minted on the board']) assert.equal(ask.includes(stale), false, stale);
+  // ask.py is found by its exact install path, never by a search; first-run status (4) and a login timeout (5) are named.
+  for (const needle of ['~/.claude/plugins/cache/deploy-forward/worklanes/<version>/scripts/ask.py', 'claude plugin list',
+    '~/.codex/plugins/cache/deploy-forward/worklanes/<version>/scripts/ask.py', 'codex plugin list',
+    'stop and ask the person', 'Never search for ask.py', 'before the first `login` this is expected',
+    '| 5 | `login` saw no Allow in time', 'press Allow within 5 minutes, then run `login` again']) assert.ok(ask.includes(needle), needle);
 });

@@ -1,6 +1,6 @@
 # Deploy Forward plugins
 
-Marketplace for Convoy 1.0.11 and Worklanes 0.5.4. Convoy 1.0.11 is written for the Convoy CLI v1.4.1. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
+Marketplace for Convoy 1.0.11 and Worklanes 0.5.5. Convoy 1.0.11 is written for the Convoy CLI v1.4.1. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
 
 ## Install by harness
 
@@ -46,6 +46,8 @@ claude plugin update worklanes@deploy-forward
 Then run `/reload-plugins` in an open session. Verify the installed versions and commands; an updated cache is not proof the running session loaded it. See [Claude Code plugin management](https://code.claude.com/docs/en/discover-plugins).
 
 For a local checkout, register the checkout root. Codex's marketplace manifest is `.agents/plugins/marketplace.json`; its plugin manifests live under each plugin's `.codex-plugin/`. Follow the installed client's plugin UI and inspect the selected version.
+
+`worklanes/scripts/ask.py` (Python 3.11+, standard library only) connects a terminal agent with `ask.py login --name <agent>` (the person presses Allow in a browser tab), asks another agent through the board and waits for the answer, and answers asks addressed to it: `ask.py serve --pings` answers an exact `ping` with `pong` while it runs. `ask.py ping --to <agent>` exits 0 only when that agent answers `pong`, which proves the ask, the agent hearing it, its answer and your collection of it, and nothing more.
 
 Worklanes connects to the hosted board MCP using the person's OAuth approval. Convoy requires Python 3.11+, the Convoy CLI v1.4.1, and its loopback MCP at `http://127.0.0.1:8788/mcp`. MCP writes remain bearer-gated. This repository contains no credentials.
 

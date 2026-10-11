@@ -32,7 +32,7 @@ test('marketplaces point to existing local plugins, omit version pins, use produ
 test('both harness manifests agree on release versions and product author', () => {
   assert.match(read('LICENSE'), /^MIT License\r?\n/);
   assert.match(read('LICENSE'), /Copyright \(c\) 2026 Deploy Forward/);
-  for (const [plugin, version] of [['convoy', '1.0.11'], ['worklanes', '0.5.4']]) {
+  for (const [plugin, version] of [['convoy', '1.0.11'], ['worklanes', '0.5.5']]) {
     for (const harness of ['claude', 'codex']) {
       const manifest = json(`${plugin}/.${harness}-plugin/plugin.json`);
       assert.equal(manifest.name, plugin);
@@ -53,7 +53,7 @@ test('both harness manifests agree on release versions and product author', () =
 test('all harness renders exactly match their canonical sources', () => {
   const result = run(['scripts/render-skills.mjs', '--check']);
   assert.equal(result.status, 0, result.stdout + result.stderr);
-  assert.match(result.stdout, /21 canonical skills; 46 rendered files; 0 failures/);
+  assert.match(result.stdout, /22 canonical skills; 48 rendered files; 0 failures/);
 });
 
 test('MCP sources retain loopback Convoy and hosted Worklanes boundaries', () => {

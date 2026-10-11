@@ -275,8 +275,16 @@
       "provenance": "4825deb9bd8e:grok/rules/convoy-operate.md"
     },
     {
+      "hash": "8fd92108f0b5",
+      "provenance": "a68b6382bc0e:agents/skills/convoy-dictionary/SKILL.md"
+    },
+    {
       "hash": "902b442bcbab",
       "provenance": "4825deb9bd8e:cursor/rules/convoy-operate.mdc"
+    },
+    {
+      "hash": "936774456ebd",
+      "provenance": "a68b6382bc0e:convoy/skills/convoy-dictionary/SKILL.md"
     },
     {
       "hash": "9404dcfaf974",

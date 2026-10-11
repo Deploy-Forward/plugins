@@ -37,6 +37,7 @@ Rows marked **1.2.0** exist from Convoy 1.2.0. On an older CLI they are absent; 
 | whoami | Which chair THIS session is, and how that was proven (`environment` and `token` are strong; `pane-host` is strong only for receipts; `cwd` alone is weak). | `convoy whoami` |
 | worktree | The git worktree Convoy cut for a neuron. A neuron works only in its own. | the add card |
 | placement `here` (**1.3.3**) | `add --here` / `launch --here`, and the MCP `launch` tool's `here: true`: an opt-in split of the window the person is working in, beside the automatic placements `thread-window`, `split` and `detached`. Never the default. | the add/launch card's `placement` field |
+| enrolled device (**1.4.1**) | A machine paired to a Worklanes organisation (`convoy install --local --pair`; the board calls it a Machine). While `convoy mcp` runs, it polls the board, delivers a card handed to it to the one seated chair of the requested harness, or launches that chair itself when none is seated and the press was the device owner's own. Otherwise it refuses with a reason the board shows. Nudges from the board are answered `unsupported`. | the board's Machines list; `origin.json` |
 | board, card | Worklanes: the hosted board, and one piece of work on it. Never "ticket" or "task". | the Worklanes tools |
 
 ## Which command for which intent
@@ -81,7 +82,7 @@ working in, whichever pane has focus. The card's `window` names it.
 **A Linux or macOS machine or VM (Debian 13 included, or any headless box).**
 
 - Install into a virtual environment, because Debian refuses `pip install --user` (PEP 668):
-  `python3 -m venv ~/.convoy-venv && . ~/.convoy-venv/bin/activate && python -m pip install "git+https://github.com/Deploy-Forward/convoy@v1.3.3"`.
+  `python3 -m venv ~/.convoy-venv && . ~/.convoy-venv/bin/activate && python -m pip install "git+https://github.com/Deploy-Forward/convoy@v1.4.1"`.
 - Install the skills with the plugin marketplace (Claude Code, Codex, and Cursor, which loads the Claude Code
   plugin), or with the repository's `node install.mjs --apply` (Grok and agy).
 - Inside tmux, `convoy add` splits your exact pane. Outside tmux, with tmux installed, each thread gets one detached

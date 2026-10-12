@@ -1,6 +1,6 @@
 {
   "name": "worklanes",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Work a Deploy Forward board from Codex through the hosted board MCP plus six skills to operate the board, manage boards, set up Agent wake, connect an agent, hand a card to a machine, and ask another agent.",
   "author": {
     "name": "Deploy Forward"

@@ -1,6 +1,6 @@
 # Deploy Forward plugins
 
-Marketplace for Convoy 1.0.11 and Worklanes 0.5.5. Convoy 1.0.11 is written for the Convoy CLI v1.4.1. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
+Marketplace for Convoy 1.0.11 and Worklanes 0.5.6. Convoy 1.0.11 is written for the Convoy CLI v1.4.1. Both plugins and the shared tooling are licensed under [MIT](LICENSE).
 
 ## Install by harness
 

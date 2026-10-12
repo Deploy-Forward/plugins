@@ -15,10 +15,10 @@ Standard library only. Commands:
 `--to` takes an agentId, or an agent name. The await cursor is the platform's `nextSince`; it is printed as
 `since` and passed back with `--since`.
 
-Every command prints one JSON object on stdout; `serve` prints one per line as it works.
+Every command prints one JSON object on stdout (`login` first prints a `waiting_for_allow` line with the link); `serve` prints one per line as it works.
 Exit codes: 0 ok; 2 timed out (resume with `await`); 3 refused or not_pong; 4 configuration missing (before the
 first `login` this is expected: `status` says `loggedIn: false` and `next`); 5 `login` saw no Allow in time (run
-`login` again and press Allow within its timeout; nothing to resume).
+`login` again and press Allow on the NEW link it shows; nothing to resume).
 
 The credential is an agent token that `login` writes to a file (owner-only). It is read from that file at call
 time, stripped of a BOM and whitespace, and never printed.
@@ -30,13 +30,14 @@ import json
 import os
 import secrets
 import sys
+import threading
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
 import webbrowser
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 DEFAULT_API_BASE = "https://app.deployforward.dev"
 DEFAULT_CREDENTIAL_FILE = os.path.join("~", ".config", "worklanes", "agent_credential.txt")
@@ -335,10 +336,16 @@ def do_serve(args, credential):
 
 
 def wait_for_code(server, state, timeout):
-    """Serves the loopback redirect until it carries our state, or the time runs out."""
+    """Serves the loopback redirect until it carries our state, or the time runs out.
+
+    Each connection runs on its own daemon thread with a short socket timeout, so a browser's idle (speculative)
+    connection can never hold up the real redirect or the deadline."""
     found = {}
+    arrived = threading.Event()
 
     class Callback(BaseHTTPRequestHandler):
+        timeout = 5
+
         def log_message(self, *a):
             pass
 
@@ -346,9 +353,7 @@ def wait_for_code(server, state, timeout):
             parsed = urllib.parse.urlsplit(self.path)
             query = {k: v[0] for k, v in urllib.parse.parse_qs(parsed.query).items()}
             ours = parsed.path == "/cb" and query.get("state") == state
-            if ours:
-                found.update(query)
-            page = ("Connected. You can close this tab." if ours and "code" in query else
+            page = ("Allow received. Finishing in the agent: check it for the result." if ours and "code" in query else
                     "Not connected. Go back to the agent." if ours else "Not found.")
             raw = ("<!doctype html><meta charset=utf-8><title>Deploy Forward</title><p>%s</p>" % page).encode()
             self.send_response(200 if ours else 404)
@@ -356,16 +361,17 @@ def wait_for_code(server, state, timeout):
             self.send_header("Content-Length", str(len(raw)))
             self.end_headers()
             self.wfile.write(raw)
+            if ours and not arrived.is_set():
+                found.update(query)
+                arrived.set()
 
     server.RequestHandlerClass = Callback
-    deadline = time.monotonic() + timeout
-    while not found:
-        remaining = deadline - time.monotonic()
-        if remaining <= 0:
-            return None
-        server.timeout = min(remaining, 1.0)
-        server.handle_request()
-    return found
+    serving = threading.Thread(target=server.serve_forever, kwargs={"poll_interval": 0.2}, daemon=True)
+    serving.start()
+    try:
+        return dict(found) if arrived.wait(timeout) else None
+    finally:
+        server.shutdown()
 
 
 def do_login(args, path):
@@ -373,7 +379,8 @@ def do_login(args, path):
     endpoints = {k: meta.get(k) for k in ("authorization_endpoint", "token_endpoint", "registration_endpoint")}
     if not all(isinstance(v, str) and v for v in endpoints.values()):
         raise Refused("oauth_metadata_incomplete")
-    server = HTTPServer(("127.0.0.1", 0), BaseHTTPRequestHandler)
+    server = ThreadingHTTPServer(("127.0.0.1", 0), BaseHTTPRequestHandler)
+    server.daemon_threads = True
     try:
         redirect = "http://127.0.0.1:%d/cb" % server.server_address[1]
         client = once(args, None, "POST", "", url=endpoints["registration_endpoint"], body={
@@ -395,16 +402,15 @@ def do_login(args, path):
         sys.stderr.write("A browser tab opens on the board: sign in, tick the organisation and press Allow.\n")
         sys.stderr.write("If no tab opened, open this link: %s\n" % link)
         sys.stderr.flush()
-        if not args.no_browser:
-            webbrowser.open(link)
+        opened = False if args.no_browser else bool(webbrowser.open(link))
+        OUT.line({"status": "waiting_for_allow", "link": link, "expiresInSec": int(args.timeout) if float(args.timeout).is_integer() else args.timeout, "browserOpened": opened})
         got = wait_for_code(server, state, args.timeout)
     finally:
         server.server_close()
     if got is None:
-        minutes = max(1, round(args.timeout / 60))
         return OUT.emit({"loggedIn": False, "status": "login_timeout", "error": "no_allow_in_time",
-                         "next": "press Allow within %d minute%s, then run ask.py login --name %s again"
-                         % (minutes, "" if minutes == 1 else "s", args.name)}, 5)
+                         "next": "run ask.py login --name %s again, then press Allow on the NEW link it shows "
+                         "(the old one no longer works)" % args.name}, 5)
     if "code" not in got:
         raise Refused(got.get("error") or "authorization_failed")
     token = once(args, None, "POST", "", url=endpoints["token_endpoint"], form={
@@ -533,7 +539,7 @@ def build_parser():
     sub.add_parser("status", help="show what is configured, never a value")
     login = sub.add_parser("login", help="connect this agent: a browser tab opens and the person presses Allow")
     login.add_argument("--name", required=True, help="the agent name other agents address you by")
-    login.add_argument("--timeout", type=float, default=300, help="seconds to wait for Allow; exit 5 when none came")
+    login.add_argument("--timeout", type=float, default=900, help="seconds to wait for Allow; exit 5 when none came")
     login.add_argument("--no-browser", action="store_true", help=argparse.SUPPRESS)
     sub.add_parser("whoami", help="this agent's agentId, name and scope")
     ask = sub.add_parser("ask", help="create a card addressed to an agent; prints its cardId")

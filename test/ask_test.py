@@ -11,6 +11,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 import threading
 import unittest
 import urllib.parse
@@ -512,12 +513,71 @@ class AnswerTests(unittest.TestCase):
             self.assertEqual(stub.revoked, [])  # nothing to revoke on a first login
             with open(fresh, encoding="utf-8") as handle:
                 self.assertEqual(handle.read().strip(), stub.issue)
-            out = json.loads(stdout)
+            first, out = [json.loads(x) for x in stdout.strip().splitlines()]
+            self.assertEqual((first["status"], first["browserOpened"], first["expiresInSec"]), ("waiting_for_allow", False, 30))
+            self.assertTrue(first["link"].startswith(stub.base + "/oauth/authorize?"))
             self.assertTrue(out["loggedIn"])
             self.assertEqual(out["name"], "claude-code")
             for text in (stdout, stderr):
                 self.assertNotIn(stub.issue, text)
                 self.assertNotIn("code-1", text)
+
+    def start_login(self, stub, timeout):
+        env = {k: v for k, v in os.environ.items() if k != "WORKLANES_CREDENTIAL_FILE"}
+        cred = os.path.join(self.tmp.name, "sub", "agent_credential.txt")
+        proc = subprocess.Popen([sys.executable, ASK, "--api-base", stub.base, "--credential-file", cred, "login",
+                                 "--name", "claude-code", "--no-browser", "--timeout", str(timeout)],
+                                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, env=env)
+        first = json.loads(proc.stdout.readline())
+        query = {k: v[0] for k, v in urllib.parse.parse_qs(urllib.parse.urlsplit(first["link"]).query).items()}
+        port = urllib.parse.urlsplit(query["redirect_uri"]).port
+        return proc, first, query, port
+
+    def test_login_prints_the_waiting_line_with_link_and_expiry_before_blocking(self):
+        with Stub() as stub:
+            proc, first, query, port = self.start_login(stub, 7)
+            proc.kill()
+            proc.communicate()
+        self.assertEqual(set(first), {"status", "link", "expiresInSec", "browserOpened"})
+        self.assertEqual((first["status"], first["expiresInSec"], first["browserOpened"]), ("waiting_for_allow", 7, False))
+
+    def test_login_default_timeout_is_900(self):
+        with open(ASK, encoding="utf-8") as handle:
+            self.assertRegex(handle.read(), r'login\.add_argument\("--timeout", type=float, default=900')
+
+    def test_an_idle_connection_cannot_block_the_real_callback(self):
+        import socket
+        with Stub() as stub:
+            proc, first, query, port = self.start_login(stub, 30)
+            idle = socket.create_connection(("127.0.0.1", port))
+            try:
+                t0 = time.monotonic()
+                with urllib.request.urlopen(first["link"], timeout=10) as page:
+                    body = page.read().decode()
+                self.assertLess(time.monotonic() - t0, 5)
+                self.assertIn("Allow received. Finishing in the agent: check it for the result.", body)
+                self.assertNotIn("Connected", body)
+                out, _ = proc.communicate(timeout=20)
+            finally:
+                idle.close()
+                proc.kill()
+        self.assertEqual(proc.returncode, 0, out)
+        self.assertTrue(json.loads(out.strip().splitlines()[-1])["loggedIn"])
+
+    def test_only_an_idle_connection_still_exits_5_within_timeout_plus_2(self):
+        import socket
+        with Stub() as stub:
+            proc, first, query, port = self.start_login(stub, 3)
+            idle = socket.create_connection(("127.0.0.1", port))
+            try:
+                t0 = time.monotonic()
+                out, _ = proc.communicate(timeout=30)
+                elapsed = time.monotonic() - t0
+            finally:
+                idle.close()
+                proc.kill()
+        self.assertEqual(proc.returncode, 5, out)
+        self.assertLessEqual(elapsed, 3 + 2)
 
     def test_login_without_allow_in_time_exits_5_and_says_to_run_login_again(self):
         fresh = os.path.join(self.tmp.name, "sub", "agent_credential.txt")
@@ -527,10 +587,11 @@ class AnswerTests(unittest.TestCase):
                                    "login", "--name", "claude-code", "--no-browser", "--timeout", "1"],
                                   capture_output=True, text=True, env=env, timeout=60)
             self.assertEqual(proc.returncode, 5, proc.stdout + proc.stderr)
-            out = json.loads(proc.stdout)
+            first, out = [json.loads(x) for x in proc.stdout.strip().splitlines()]
+            self.assertEqual(first["status"], "waiting_for_allow")
             self.assertEqual((out["loggedIn"], out["status"], out["error"]), (False, "login_timeout", "no_allow_in_time"))
-            self.assertIn("press Allow within 1 minute", out["next"])
-            self.assertIn("ask.py login --name claude-code", out["next"])
+            self.assertEqual(out["next"], "run ask.py login --name claude-code again, then press Allow on the NEW link it shows "
+                                          "(the old one no longer works)")
             self.assertNotIn("await", proc.stdout)
             self.assertFalse(os.path.exists(fresh))
             self.assertNotIn("token", stub.oauth)
@@ -540,7 +601,7 @@ class AnswerTests(unittest.TestCase):
             code, stdout, stderr = self.login(stub, self.cred)
             self.assertEqual(code, 0, stdout + stderr)
             self.assertEqual(stub.revoked, [FAKE])
-            self.assertTrue(json.loads(stdout)["revokedPrevious"])
+            self.assertTrue(json.loads(stdout.strip().splitlines()[-1])["revokedPrevious"])
             with open(self.cred, encoding="utf-8") as handle:
                 self.assertEqual(handle.read().strip(), stub.issue)
             for text in (stdout, stderr):

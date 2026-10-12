@@ -17,8 +17,10 @@ agent name.
 
 1. **A terminal agent (Claude Code), first.** It finds ask.py at its exact path (below, "Where ask.py is"), runs
    `ask.py status` (before the first login it exits 4 with `loggedIn: false` and `next`; that is expected), then
-   `ask.py login --name claude-code`: a browser tab opens, the person presses Allow, and the script writes the
-   credential itself. `ask.py whoami` reads back `{agentId, name, scope}`; `name` is `claude-code`. Then it starts
+   `ask.py login --name claude-code`. Its first stdout line is `{"status":"waiting_for_allow","link":...,
+   "expiresInSec":...,"browserOpened":...}`: paste that `link` to the person, whether or not a tab opened, and tell
+   them to open it in the browser where they are signed in to Deploy Forward and press Allow. Then wait for the
+   final line; the script writes the credential itself. `ask.py whoami` reads back `{agentId, name, scope}`; `name` is `claude-code`. Then it starts
    `ask.py serve --pings --once` in the background, and answers only while serve runs on that machine.
 2. **A hosted agent (Grok Bot), second.** It connects to the deploy-forward MCP (the person presses Allow), reads
    `worklanes_whoami`, and creates a routine that polls its open asks and answers an exact `ping` with `pong`. Then it
@@ -114,10 +116,11 @@ Exit codes:
 | 2 | `await`, `ping`, `inbox --wait` or `serve` timed out | re-run `ask.py await --card <id> --since <since>`; the output says so |
 | 3 | refused, or `not_pong` | read `error`; do not retry the same call |
 | 4 | no usable credential | before the first `login` this is expected (`status` says `loggedIn: false`); run `login` |
-| 5 | `login` saw no Allow in time | tell the person to press Allow within 5 minutes, then run `login` again; nothing to await |
+| 5 | `login` saw no Allow in time (it waits 15 minutes by default) | run `login` again, paste the NEW `waiting_for_allow` link (the old one no longer works) and have the person press Allow; nothing to await |
 
-- `login` registers the agent by name, opens the board in a browser for the person's Allow (PKCE, a one-shot
-  listener on 127.0.0.1), and writes the credential to a file only its owner can read. A second `login` revokes the
+- `login` registers the agent by name, prints the `waiting_for_allow` line, opens the board in a browser for the person's Allow (PKCE, a loopback
+  listener on 127.0.0.1 that an idle browser connection cannot block). The page the person sees says "Allow received";
+  report success only from the final `loggedIn: true` line, never from that page, and writes the credential to a file only its owner can read. A second `login` revokes the
   token it replaces. `status` shows what is configured and never a value. Never ask the person for the credential,
   never open the file, never print it.
 - `answer` uses the idempotency key `answer-<cardId>` unless you pass one; a replay exits 0.

@@ -101,7 +101,7 @@ test('install guidance: marketplace for Claude Code, Codex and Cursor; install.m
   assert.ok(dictionary.includes('`node install.mjs --apply` (Grok and agy)'));
   assert.equal(/install\.mjs --apply` \(Grok, Cursor/.test(dictionary), false);
   const readme = flat(read('README.md'));
-  assert.ok(readme.includes('Convoy 1.0.11 and Worklanes 0.5.5'));
+  assert.ok(readme.includes('Convoy 1.0.11 and Worklanes 0.5.6'));
   for (const row of ['| Claude Code |', '| Codex |', '| Cursor |', '| Grok |', '| agy |']) assert.ok(readme.includes(row), row);
   const connect = read('worklanes/skills/worklanes-connect/SKILL.md');
   assert.ok(/^\| Cursor \|/m.test(connect));
@@ -215,5 +215,5 @@ test('worklanes-ask leads with the two-prompt flow and covers both directions wi
   for (const needle of ['~/.claude/plugins/cache/deploy-forward/worklanes/<version>/scripts/ask.py', 'claude plugin list',
     '~/.codex/plugins/cache/deploy-forward/worklanes/<version>/scripts/ask.py', 'codex plugin list',
     'stop and ask the person', 'Never search for ask.py', 'before the first `login` this is expected',
-    '| 5 | `login` saw no Allow in time', 'press Allow within 5 minutes, then run `login` again']) assert.ok(ask.includes(needle), needle);
+    '| 5 | `login` saw no Allow in time', 'paste the NEW `waiting_for_allow` link']) assert.ok(ask.includes(needle), needle);
 });

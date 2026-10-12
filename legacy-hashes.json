@@ -311,6 +311,10 @@
       "provenance": "c550a31531b8:cursor/rules/convoy-list.mdc"
     },
     {
+      "hash": "98fcf40bf484",
+      "provenance": "0a208b9c9d08:agents/skills/worklanes-ask/SKILL.md"
+    },
+    {
       "hash": "9a88c7069563",
       "provenance": "62125842f162:convoy/skills/convoy-list/SKILL.md"
     },
@@ -325,6 +329,10 @@
     {
       "hash": "a6a265d8d975",
       "provenance": "58f817730d6c:grok/rules/convoy-lead.md"
+    },
+    {
+      "hash": "a6b339aafc54",
+      "provenance": "0a208b9c9d08:worklanes/skills/worklanes-ask/SKILL.md"
     },
     {
       "hash": "a82704626b48",

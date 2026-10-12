@@ -32,7 +32,7 @@ test('marketplaces point to existing local plugins, omit version pins, use produ
 test('both harness manifests agree on release versions and product author', () => {
   assert.match(read('LICENSE'), /^MIT License\r?\n/);
   assert.match(read('LICENSE'), /Copyright \(c\) 2026 Deploy Forward/);
-  for (const [plugin, version] of [['convoy', '1.0.11'], ['worklanes', '0.5.5']]) {
+  for (const [plugin, version] of [['convoy', '1.0.11'], ['worklanes', '0.5.6']]) {
     for (const harness of ['claude', 'codex']) {
       const manifest = json(`${plugin}/.${harness}-plugin/plugin.json`);
       assert.equal(manifest.name, plugin);

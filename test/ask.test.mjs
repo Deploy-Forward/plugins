@@ -18,5 +18,5 @@ test('ask.py: offline tests against a local stub pass (Python 3.11+)', { timeout
   const [cmd, ...rest] = python;
   const result = spawnSync(cmd, [...rest, 'test/ask_test.py', '-v'], { cwd: root, encoding: 'utf8', windowsHide: true, timeout: 230000 });
   assert.equal(result.status, 0, result.stdout + result.stderr);
-  assert.match(result.stderr, /Ran 22 tests/);
+  assert.match(result.stderr, /Ran 26 tests/);
 });
